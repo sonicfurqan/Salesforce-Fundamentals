@@ -1,0 +1,18 @@
+<apex:page  >
+
+    <style>
+        @font-face {
+    font-family: myAwsomeFont;
+    src: url({!URLFOR($Resource.folder, 'fonts/stlishFontFile.ttf')});
+}
+        p{
+        font-family:myAwsomeFont;
+        }
+        
+
+      
+    </style>
+    <p>
+this is styled
+    </p>
+</apex:page>

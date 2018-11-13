@@ -1,0 +1,4 @@
+<aura:component >
+<aura:attribute name='variable' type='string' default='this is component named MYCOMP'/>
+
+</aura:component >

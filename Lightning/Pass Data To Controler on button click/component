@@ -1,0 +1,10 @@
+<aura:component>
+
+<aura:attribute name='myList' type='List'/>
+
+  <aura:iteration items="{!v.myList}" var="lData">
+
+  <div data-passing="{!lData.index}" id="{!lData.Id}" value="{!lData.value}" name="{!lData.name}" onclick="{!c.catchData}">
+  </aura:iteration>
+
+</aura:component>

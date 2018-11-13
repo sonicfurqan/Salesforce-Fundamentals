@@ -1,0 +1,8 @@
+<aura:component>
+
+<aura:handler name='init' value='{!this}' action='{!c.onInit}'/>
+<aura:attribute name="vfHost" type="String" default="myworld--c.cs14.visual.force.com"/>
+
+<iframe aura:id="vfFrame" src="{!'https://' + v.vfHost + '/apex/ICS_KM_VF_RichText'}" onload="{!c.onload}" style="border:0px" />
+
+</aura:component>
