@@ -1,0 +1,8 @@
+<aura:component>
+
+<aura:attribute name='changeAtribute' type='String' description='' />
+<aura:handler name='change' value='{!v.changeAtribute}' action='{!c.onChangeControler}' description='on change of value in attribute changeAtribute onChangeControler controller is called' />
+<aura:handler name='init' value='{!this}' action='{!c.onInit}' description='on load of page onInit method is called' />
+<aura:method name="someName" action="{!c.methodInJSController}" description='when this component is invoked from other component that component can call methodInJSController using someName attribute ' />
+<aura:attribute name="componentBody" type="Aura.Component" />
+</aura:component>

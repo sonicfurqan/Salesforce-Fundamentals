@@ -1,0 +1,185 @@
+<html>
+<script type="text/javascript">
+let list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+let objectList = [{ value: '1', index: 'one' }, { value: '2', index: 'two' }, { value: '3', index: 'three' }, { value: '4', index: 'four' },
+    { value: '5', index: 'five' }, { value: '6', index: 'six' }, { value: '7', index: 'seven' }, { value: '8', index: 'eight' },
+    { value: '9', index: 'nine' }, { value: '10', index: 'ten' }
+];
+
+//forEach
+function forEachExample() {
+    //Itrate through list
+    //old javascript
+    for (var i = 0; i < 10; i++) {
+        console.log('Element using for ', list[i]);
+    }
+    for (var i in objectList) {
+        console.log('Element using for in ', objectList[i]);
+    }
+    for (var i of objectList) {
+        console.log('Element using for of ', i);
+    }
+
+    //es5 
+    list.forEach(function(listItem) {
+        console.log('Element using forEach  ', listItem);
+    });
+    objectList.forEach(function(objItem) {
+        console.log('Element using forEach  '.value);
+    });
+    //arrow  
+    list.forEach(listItem => console.log('Element using forEach arrow ', listItem));
+    objectList.forEach(objItem => console.log('Element using forEach arrow ', objItem.value));
+}
+
+//filter
+function findElementInLoop() {
+    let find = '5';
+    //old javascript
+    for (var i = 0; i < 10; i++) {
+        if (list[i] == find)
+            console.log('Element using for ', list[i]);
+    }
+    for (var i in objectList) {
+        if (objectList[i].value == find)
+            console.log('Element using for in ', objectList[i]);
+    }
+    for (var i of objectList) {
+        if (i.value == find)
+            console.log('Element using for of ', i);
+    }
+
+    let filterd;
+    //es5
+    filterd = list.filter(function(listItem) {
+        return listItem == find;
+    });
+    console.log('finding using filter ', filterd);
+    filterd = objectList.filter(function(objItem) {
+        return objItem.value == find;
+    });
+    console.log('finding using filter ', filterd);
+    //arrow  
+    filterd = list.filter(listItem => listItem == find);
+    console.log('finding using filter arrow ', filterd);
+    filterd = objectList.filter(objItem => objItem.value == find);
+    console.log('finding using filter arrow ', filterd);
+
+}
+
+
+//some
+function checkElementIsInArray() {
+    let find = '6';
+
+    //old javascript
+    for (var i = 0; i < 10; i++) {
+        if (list[i] == find) {
+            console.log('Found at position ', i);
+            break;
+        }
+    }
+    for (var i in objectList) {
+        if (objectList[i].value == find) {
+            console.log('Found at position ', i);
+        }
+    }
+    for (var i of objectList) {
+        if (i.value == find) {
+            console.log('Found element ', i);
+        }
+    }
+
+    let filterd;
+    //es5
+    filterd = list.some(function(listItem) {
+        return listItem == find;
+    });
+    console.log('Found ', filterd);
+    filterd = objectList.some(function(objItem) {
+        return objItem.value == find;
+    });
+    console.log('Found ', filterd);
+    //arrow  
+    filterd = list.some(listItem => listItem == find);
+    console.log('Found ', filterd);
+    filterd = objectList.some(objItem => objItem.value == find);
+    console.log('Found ', filterd);
+
+}
+
+//reduce
+function addElementsOfArray() {
+    let count = 0;
+    //old javascript
+    for (var i = 0; i < 10; i++) {
+        count += parseInt(list[i]);
+    }
+    console.log('total using for ', count);
+    count = 0;
+    for (var i in objectList) {
+        count += parseInt(objectList[i].value)
+    }
+    console.log('total using for in ', count);
+    count = 0;
+    for (var i of objectList) {
+        count += parseInt(i.value)
+    }
+    console.log('total using for of ', count);
+
+    //es5
+    count = list.reduce(function(tot, ele) {
+        tot += parseInt(ele);
+        return tot;
+    }, 0);
+    console.log('total using reduce ', count);
+    count = objectList.reduce(function(tot, ele) {
+        tot += parseInt(ele.value);
+        return tot;
+    }, 0);
+    console.log('total using reduce ', count);
+
+    //arrow  
+    count = list.reduce(((tot, ele) => tot += parseInt(ele)), 0);
+    console.log('total using reduce arrow ', count);
+    count = objectList.reduce(((tot, ele) => tot += parseInt(ele.value)), 0);
+    console.log('total using reduce arrow ', count);
+
+}
+//map
+function addOneToValueInList() {
+
+    //old javascript
+    for (var i = 0; i < 10; i++) {
+        list[i] = list[i] + 'new';
+    }
+    console.log('List using for ', list);
+    for (var i in objectList) {
+        objectList[i].value = objectList[i].value + 'new';
+    }
+    console.log('List using for in ', objectList);
+
+    for (var i of objectList) {
+        //i.value=i.value+'new';
+    }
+    console.log('List using  for of ', objectList);
+    let newList;
+    //es5
+    newList = list.map(function(ele) {
+        return ele = ele + 'new';
+    });
+    console.log('new List using map ', newList);
+    newList = objectList.map(function(ele) {
+        return ele.value = ele.value + 'new';
+    });
+    console.log('new List using map ', newList);
+
+    //arrow  
+    newList = list.map(ele => ele = ele + 'new');
+    console.log('new List using map arrow ', newList);
+    newList = objectList.map(ele => ele.value = ele.value + 'new');
+    console.log('new List using map arrow ', newList);
+}
+</script>
+
+</html>

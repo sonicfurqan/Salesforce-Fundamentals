@@ -1,0 +1,6 @@
+<apex:page controller="recordRedirectClass">
+
+    <apex:detail subject="{!recordId}" relatedList="false" title="false"/>
+
+
+</apex:page>
