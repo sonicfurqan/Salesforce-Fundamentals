@@ -1,0 +1,7 @@
+CNTRL+SHITF+X =  Shows extention
+CNTRL + K Z =Full screen
+CNTRL + B = Side bar
+CNTRL + ` = Terminal/debug
+SHIFT + ALT + F = Code Format
+CNTRL + P= search file
+CNTRL + K CNTRL + 1,2,3,4,5 = fold methods
