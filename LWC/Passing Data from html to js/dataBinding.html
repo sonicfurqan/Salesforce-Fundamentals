@@ -1,0 +1,24 @@
+<template>
+    <p>
+        Data from number field is passed to changeHandlerForElements js method on change event
+        <lightning-input value={number} type="number" name="number" label="Number Input" onchange={changeHandlerForElements}>
+        </lightning-input>
+    </p>
+    <p>
+        Data from text field is passed to changeHandlerForElements js method on change event
+       <lightning-input value={textV} name="text" label="Text Input" onchange={changeHandlerForElements}></lightning-input>
+    </p>
+
+    <p>
+        Data from checkbox field is passed to changeHandlerForSingleElement js method on click event
+        <lightning-input value={checkbox} type="checkbox" label="Checkbox Input" name="checkbox" onclick={changeHandlerForSingleElement}></lightning-input>
+    </p>
+    
+   <p>
+        Data from button attributes(name,value,data)  is passed to buttonClickHandler js method on click event
+        <lightning-button label="Input Button" name='buttonName' value='valueToBePassed' data-datasetname='ok' onclick={buttonClickHandler}>
+        </lightning-button>
+    </p>
+    
+    
+</template>
