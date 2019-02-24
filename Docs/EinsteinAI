@@ -1,377 +1,513 @@
-Node.js on Heroku  
-
-Prerequisite for ubuntu systems (for windows google search)  
-
-Install node.js in system  
-1.sudo apt-get install nodejs  
-2.sudo apt-get install npm  
-3.sudo ln -s /usr/bin/nodejs /usr/bin/node //creating sym link  
-
-Install required packages   
-
-Npm install  
-
-Npm install express  
-
-Npm install require  
-
-Npm install body-parser  
-
-mpm install --save --save-exact cool-ascii-faces  
-
-  
-
-Install heroku cli  
-1.sudo add-apt-repository "deb https://cli-assets.heroku.com/branches/stable/apt./"  
-2.curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add -  
-3.sudo apt-get update  
-4.sudo apt-get install heroku  
+Einstein AI 
 
  
 
-Install git  
-1.sudo apt-get update  
-2.sudo apt-get upgrade  
-3.sudo apt-get install git  
+VISION 
 
  
 
-Install ngrok(For debuging localy) 
-1.downlod file from https://ngrok.com/download for linux 
+Pre-Requisite 
 
- Node.js 
+1.Register to metamind with salesforce account and download einstein_platform.pem file and upload to files 
 
-Library: system 
+2.add Remote site access named EinsteinAI 
 
-these are system functions that we use 
+With address https://api.einstein.ai 
 
-Method: 
+3.add Label named EinsteinAI_Email 
 
-Init:this is used to create package structure of our js  file in folder 
-Example 
-$ npm init –yes 
-this will create package.json file that contains structure of js 
-Command in root directory to execute  
-$npm init 
-this is step by step proceger for creating package.json it will ask all parmeters 
+With value your email address that is used in registering  metamind 
 
-Express.static: To include static files such as images, CSS files, and JavaScript files, in our project we use express.static function in Express 
+4.add Label named EinsteinAI_BaseUrl 
+
+With value https://api.einstein.ai/v2 
+
+Note: 
+
+Zip file uploaded from local drive max size 50mb 
+
+Zip file uploaded from url max size 1gb 
+
+Each zip must have minimum 40 images equally distributed in each subfoledr(label) 
+
+Image file cannot   be more then 4mb in size uploading and prediction both 
+
+Glossary 
+
+Dataset: main folder name that contains all sub folders 
+
+Labels; sub folders name that contains images  
+
+Model: labels that are trained  
+
+Train: make system to recognize type of image in each label 
+
+Feedback: train system by sending wrong predicted image back to system with expected label to make system more efficient(this can be achieved using only curl operation) 
+
+Json web token(jwt): we sign our rsa key with jwt and get access token 
+
+Basic: 
+
+1.Upload dataset to system 
+
+2.train dataset 
+
+3.get modelId 
+
+4.predict image using model id 
+
+Using curl 
+
+1.Uploadind dataset by async method using url  
+
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "path=http://einstein.ai/images/mountainvsbeach.zip" -F "type=image"  https://api.einstein.ai/v2/vision/datasets/upload 
+
+Parameters 
+
+Path: specify your zip url max size 1gb 
+
+Type: is image 
+
+Name: name of dataset if ignored it takes zip name 
+
+2.Train dataset 
+
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "name=Beach Mountain Model" -F "datasetId=57" https://api.einstein.ai/v2/vision/train 
+
+Parameters 
+
+datasetid:you get dataset id during uploading stage. 
+
+Name: name of dataset 
+
+3.Get models if dataset 
+
+You get modelid of dataset that is used to tell system that you want to predict image for these labels 
+
+curl -X GET -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" https://api.einstein.ai/v2/vision/datasets/<datasetID>/models 
+
+Parameters 
+
+datasetid:you get dataset id during uploading stage 
+
+4.predict image  
+
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "sampleLocation=http://www.mysite.com/our_beach_vacation.jpg" -F "modelId=YCQ4ZACEPJFGXZNRA6ERF3GL5E" https://api.einstein.ai/v2/vision/predict. 
+
+Parameters 
+
+modelid:model id that you obtaind in above step 
+
+samplaelocation:it is url of image 
+
+ 
+
+Using RestApi  
+
+These are custom class that I have made 
+
+Class name "EinsteinAI_Vision"  
+
+Creating EinsteinAI_Vision instance generates a access token that is valid for 3600 secs 
+
+Methods available 
+
+1.getBearerToken(): return access token  
+
+2.getApiUsage():return  (EinsteinAI_ApiUsage_Wraper) 
+
+licenseId, 
+
+predictionsRemaining, 
+
+predictionsUsed, 
+
+PredictionsMax 
+
+3.createDataset(String url,String name):creates a dataset from url with specified name and returns  id, 
+
+Return EinsteinAI_Dataset_Wraper 
+
+     name, 
+
+     totalExamples, 
+
+     available, 
+
+     statusMsg, 
+
+     list of labels 
+
+4.getAllDatasets():return list of all datasets parameters 
+
+Return (List<EinsteinAI_Dataset_Wraper>) 
+
+Id, 
+
+name, 
+
+list of label, 
+
+available, 
+
+statusMsg, 
+
+TotalLabels 
+
+5.getDataset(String datasetId):returns details of singel dataset parameters 
+
+Return (EinsteinAI_Dataset_Wraper) 
+
+Id, 
+
+name, 
+
+list of label, 
+
+available, 
+
+statusMsg, 
+
+TotalLabels 
+
+6.deleteDataset(String id):deletes dataset returns status code 204 for success 404 for not found and 400 for error 
+
+7.trainDataset(String name,String datasetid):name is userdefined you can name anything and datasetid is for which dataset you want to train after uploading successfully function return (EinsteinAI_Traning_Wraper) 
+
+DatasetId, 
+
+name, 
+
+status, 
+
+progress, 
+
+queuePosition, 
+
+ModelId 
+
+8.reTrainDataset(String modelId):if you want to retrain model without changing model id use this.It is help full when you add feed back our new images to label 
+
+Returns (EinsteinAI_Traning_Wraper) 
+
+DatasetId, 
+
+name, 
+
+status, 
+
+progress, 
+
+queuePosition, 
+
+ModelId 
+
+9.getTrainingStatus(String modelId):it accepts modelid and returns status of training parameters  
+
+Return (EinsteinAI_Traning_Wraper) 
+
+DatasetId, 
+
+name, 
+
+status, 
+
+progress, 
+
+modelId, 
+
+list of trainStats 
+
+10.getDatasetModels(String DatasetId):it returns list of models of dataset parameters 
+
+Return (List<EinsteinAI_Traning_Wraper>) 
+
+DatasetId, 
+
+name, 
+
+status, 
+
+failureMsg,(if status is failed you get this ) 
+
+ModelId 
+
+11.predictBase64(String base64,String modelId):it accepts image file converted to base 64formate and model id of which dataset label it need to predict parameters return is list of probability and label name in ascending order 
+
+Return (List<EinsteinAI_Predict_Wraper>) 
+
+Label, 
+
+probability 
+
+ 
+
+12.predicturl(String url,String modelId):it accepts image file url and model id of which dataset label it need to predict parameters return is list of probability and label name in ascending order 
+
+Return (List<EinsteinAI_Predict_Wraper>) 
+
+Label, 
+
+probability 
 
  
 
  
 
-Library: Express  
-
-Express is used when you want to receive a request from external source by url either in get, post, delete, put method   
-
-Variables Required  
-
-Var express = require('express');  
-/*require('express') import express library in our project and assign to variable named express*/  
-
-var app = express ();  
-/*all express library methods cannot be used directly hence it needs to be asigend to one variable that will act as class for express library*/  
-
-var port = process.env.port || 3000;  
-/*process.env.port || portnumber(3000) defines that all request coming on port 3000 are listend by our express app */  
-
-Parameters to understand  
-
- Path:This is used to define when a method is to be executed based on url path  
-consider this as a parameter used for function overloading I.e  
-example: /*these are ending of url request */  
-
- ( '/' ) all request with no parameters in url are routed to this method  
-
-('/admin')all requests that have admin at end are routed to this method  
-
-('/user')all requests that have user at end are routed to this method  
-
-('/login/admin') all requests that have /login/admin at end are routed   
-               to  this method  
- 
- 
- 
-         
-
- middleware: this are the function that can access request, and response of post, get, put, delete methods. They are executed in sequence as written. And return back execution to main method. middleware are callback methods by default, Check included class you will get clear picture 
-Example/*on get method*/ 
-
-App.get('/',one) 
-here app.get calls method one as soon as it gets request 
-
-App.get('/',one,two) 
-here app.get calls method one as soon as it gets executed once one finishes its execution it calls two NOTE:you have to add a command next(); to call next method 
-
-App.get('/',function(req,res,next){ next();}) 
-here app.get executes its inline function first than call next method a 
  
 
-Methods//NOTE:app is variable to which we have assigned express library   
-
-App.listen():  
-when request comes this method gets executed first here it register what method type it is and send that request transfer it respectively  
-Syntax:  
-app.listen(port,function(){});  
-/*function is optional if you want to execute something as soon as you receive request then without using request variables then you can use function  
-NOTE:it is not necessery it should be inline function it can call external function */  
+LANGUAGE(Beta) 
 
-App.get(): 
-after getting request of get type method body of this function is executed 
-Syntax: 
-app.get(path,function(request,response,next){}) 
-Example 
+AIM-intent 
 
-App.get('/',function(request,response){ 
-body=JSON.stringify(res.body) 
-response.body('{}') 
-}) 
-here after getting get request inline method is executed and empty response is sent 
+IT is used to analyze sentence and predicts a key word for it  
 
-App.get('/',function(request,response,next){ 
-next(); 
-}) 
-app.use(mMethod); 
-var mMethod=function(resquest,response){} 
-here after getting request inline function is executed on coming to next () command mMethod function is executed after finishing its execution control is returned back to main inline function you can have a sequence of calls after last method execution control is returned to inline function. This type is called middleware functions  
-NOTE: all middleware share same request and response  
+Sentence and its associated keywords provided by user 
 
-Same thing for post and another methods you send back response to server in json string by using response.send(<Json string>); method 
- 
+AIM-Sentiment 
 
-Library: Require 
+IT is used to analyze a sentience and predicts a sentiment of  it  
 
-This module is used to make http request to rest api's 
+Sentence and its associated keywords provided by user. Sentiments are positive, negative, and neutral class 
 
-Variables Request 
+Pre-Requisite 
 
-Const request = require('request');  
-/*require('request') import request library in our project and assign to variable named request*/  
+1.Register to metamind with salesforce account and download einstein_platform.pem file and upload to files 
 
-Var options =/*this is json structure that includes request header method body url etc structure is given below */ 
-url is your end point 
-method is get post etc 
-headers are your header info like content type 
-form are your additional info like password id etc 
-body is your json string that is needed to be sent for post method 
-Structure: 
-{ 
-url:'<your end point>', 
-method:'<your method type>', 
-headers:{ 
-'<key>':'<value>'/*as many required headers */ 
-                }, 
-form:{ 
-'<key>':'<value>'/*as many required headers */ 
-           }, 
-body:'<your json string>' 
-} 
+2.add Remote site access named EinsteinAI 
 
-Method 
+With address https://api.einstein.ai 
 
-Request itself is method its syntax  
-request(options,function(error,response,body){ 
-               var jsonString=JSON.stringify(body); 
-                }); 
-Example 
-request('https://www.google.com',method:'GET',function(error,response,body) { 
-console.log(body); 
-}); 
-here reqest type is set to get and it is fetching data from url's get function 
+3.add Label named EinsteinAI_Email 
 
- 
+With value your email address that is used in registering  metamind 
 
-Git 
+4.add Label named EinsteinAI_BaseUrl 
 
-Git is required to upload data to github and that data is accessed by heroku to deploy(don’t worry you code is private) 
+With value https://api.einstein.ai/v2 
 
-Command to know 
+Glossery  
 
-Git init: 
-you execute this command in directory that contains files that are needed to be uploaded 
+1.dataset: a csv file congaing text sentence and their associated keywords 
 
-Git add <file/direcotry name> 
-this is used to add single file or whole directory to git hub 
+2.label: number of keywords in a dataset 
 
-Git commit –m "<any text>" 
-this is to tell system that after adding files to git you need to upload them 
+3.feedback: if model returns wrong keyword then send back same text with expected keyword to model for making it more accurate 
 
-Git push origin master// while using heroku origin is replaced with heroku 
-this finally upload your code to git hub server 
+4.Example: add more sentence and keyword to existing dataset 
 
- 
+5.Train: training a system to analyze sentence from dataset 
 
-Creating app in heroku (node.js) 
+6.predict: get probability for each keyword in dataset 
 
-For now I don’t know what's the basic structure needed to upload app to heroku and configuring git for it I will go with their hello world app and modify as we needed (If you are ambitus google is your friend) 
+Basic: 
 
- 
+1.Upload dataset to system 
 
-Copy hello world node.js app for heroku from git hub 
+2.train dataset 
 
-$Git clone https://github.com/heroku/node-js-getting-started.git 
-after downloading you can change a name of directory to what you want 
+3.get modelId 
 
-Open terminal making its root directory of node.js app 
+4.analyze text using model id 
 
-Uploading it to heroku 
+Using curl 
 
-$heroku create <your name > 
-this will create  app in heroku  where you will uploade your files  
-after successful creation of app 
+1.Uploadind dataset by async method using url  
 
-$git push heroku master 
-if successful code will be uploaded to git hub and heroku will sync with it 
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "path=http://einstein.ai/text/weather.csv" -F "type=text-intent"  https://api.einstein.ai/v2/language/datasets/upload 
 
-$heroku ps:scale web=1 
-this will start your app on web.now your web site is up and running you can access it by using url given (web=1 specifies web site is running on one server it can be up to 1 for trail version which makes our website running on 5 server) 
+Parameters 
 
-$heroku open 
-this will open your app in browser 
+Path: specify your zip url max size 1gb 
 
-   
+Type:can be text-intent for keyword traning or text-sentiment for training sentiments  
 
-Now after changing you app code you uploade files to heroku by following method 
+Name: name of dataset if ignored it takes zip name 
 
-$ git add <name> 
-this will add file to que 
+2.Train dataset 
 
-$git commit –m "<text>" 
-this will make sure that when upload cmd is executed all que files are uploaded 
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "name=Weather Intent Model" -F "datasetId=1001411" https://api.einstein.ai/v2/language/train 
 
-$git push heroku master 
-this will upload all files in que 
+Parameters 
 
- 
+datasetid:you get dataset id during uploading stage. 
 
-Understanding Heroku node.js app structure 
+Name: name of dataset 
 
-Index.js 
+3.Get models if dataset 
 
-This file is executed first when you server starts running 
+You get modelid of dataset that is used to tell system that you want to predict image for these labels 
 
-Port for heroku that is open to listing is 5000 and it should be same cannot change it 
+curl -X GET -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" https://api.einstein.ai/v2/language/datasets/<modelid>/models 
 
-Include css,images,javascripts(if any you want ito include or else leve the folder blank but public  folder is must)  by command 
-app.use(express.static(__dirname + '/public')); 
+Parameters 
 
-Include html pages from View folder. Views folder include all html pages hierarchy inside views folder is your wish but views folder is must by command 
-app.set('views', __dirname + '/views'); 
+datasetid:you get dataset id during uploading stage or get all datasets curl 
 
-We use ejs template to store our html files hence we need to set our view engine as ejs by code 
-app.set('view engine', 'ejs'); 
+4.analyzetext-intent 
 
-No to render any page in views directory you specify its path as parameter in. render() command  
-example in get method 
-response.render('pages/index')//index is ejs file in views folder under pages subfolder 
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent 
 
-App.get is where get request response is set (this you get it correct) 
+Parameters 
 
-Directories (From what I understand not guaranteed but it's 80%  accurate ) 
+modelid:model id that you obtained in above step 
 
-public contains all style sheet(css),javascriptes(js),images    
+document: it is text that you want to analyze 
 
- view contains all html (in ejs formate )that are used to render page 
+5.analyzetext-intent 
 
-App.json 
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WJH4YCA7YX4PCWVNCYNWYHBMY4" -F "document=I can't tell you how much fun it was" https://api.einstein.ai/v2/language/sentiment 
 
-Name: its name of your app 
+Parameters 
 
-Description: it is description of your app 
+modelid:model id that you obtained in above step 
 
-Image: any images that you use in your project its full path is specified here its array if there are multiple 
+document: it is text that you want to analyze 
 
-Keywords: keywords using which your app can be searched its array if multiple are to be defined 
+Using RestApi  
 
-Test.js 
+These are custom class that I have made 
 
-Test  script that checks whether all our project structure is correct if yes let it start on heroku server (This is what I interpreted from code to write your custom test script google is your friend)But test script is must 
+Class name "EinsteinAI_Language"  
 
-Package.json 
+Creating EinsteinAI_Language instance generates a access token that is valid for 3600 secs 
 
-Name:name of your app 
+Methods available 
 
-Version:version given by heroku 
+1.getBearerToken(): return access token  
 
-Description:discription of your app 
+2.getApiUsage():return  (EinsteinAI_ApiUsage_Wraper) 
 
-Engines: its array defining engines you use : 
-node and its version is mandatory as it is used 
+licenseId, 
 
-Main: your js file that is executed as soon as app is executed 
+predictionsRemaining, 
 
-Script:this is order of execution during init 
+predictionsUsed, 
 
-Dependencies: these are all node.js or 'Engines' libraries that are included in your project: 
-ejs and express is mandatory as we use it 
+PredictionsMax 
 
-DevDependencies:I don’t know you can google it if not leve it as it is 
+3.createDataset(String url,String name):creates a dataset from url with specified name and returns  (EinsteinAI_Dataset_Wraper), 
 
-Keywords:its array write what all you wrote in app.json 
+     id 
 
-License: you licence type by default its MIT change it according to your requirement 
+     name, 
 
-Procfile 
+     totalExamples, 
 
-a text file in the root directory of your application, to explicitly declare what command should be executed to start your app. 
-For our package its 
-web: node index.js 
+     available, 
 
-Local debugging your project 
+     statusMsg, 
 
-Run your app with cmd  
-$node index.js 
-here index.js is first script that is needed to run after test (index.js in my name can be anything) 
-if all is correct you will see console.log () string that is written in app.listine inline function if any 
+     list of labels 
 
-Open localhost:5000 to check if all is running correct  
+4.getAllDatasets():return list of all datasets parameters 
 
- 
-Uploading and deploying app in heroku server ( Finally) 
+Return (List<EinsteinAI_Dataset_Wraper>) 
 
-Create a heroku account 
+Id, 
 
-Open terminal and type command 
-$ heroku login 
-enter email id and password 
+name, 
 
-Go to any local directory where you want your package files to reside 
+list of label, 
 
-Type cmd 
-$ git clone https://github.com/heroku/node-js-getting-started.git 
+available, 
 
-Change directory name from node-js-getting-started to any if you wish 
-navigate inside that direcotry and open terminal 
+statusMsg, 
 
-Type cmd 
-$ create heroku <app name(optional )> 
-this will create a heroku app with you provided name if name is available  
-and result in 2 links one is public url which you can open second is private git url where you upload you code 
+TotalLabels 
 
-Next type command  
-$ git push heroku master 
-if successful this will upload all your code to git from where heroku process and runs on its server 
+5.getDataset(String datasetId):returns details of singel dataset parameters 
 
-After changing some code in files of folder if you need to update ypur code on git this is done by following series of cmds 
+Return (EinsteinAI_Dataset_Wraper) 
 
-$ Git app <file/foldername> 
+Id, 
 
-$ git commit –m "<text>" 
+name, 
 
-$ Git push heroku master 
-this series of command push your file to git and synch with your heroku server 
+list of label, 
 
-Next you need to initiate run on heroku server this is done by cmd 
-$ heroku ps:scale web=1 
-here scale web=1 specifies that only one instance of your code is running on server for free limit is one on verified account is 5 what it implies is if one instance is down other takes over it and run your site without any down time 
+available, 
 
-Finally open your web site and it does whatever code is written in app.get 
-by cmd 
-$ heroku open 
+statusMsg, 
+
+TotalLabels 
+
+6.deleteDataset(String id):deletes dataset returns status code 204 for success 404 for not found and 400 for error 
+
+7.trainDataset(String name,String datasetid):name is user defined you can name anything and datasetid is for which dataset you want to train after uploading successfully function return (EinsteinAI_Traning_Wraper) 
+
+DatasetId, 
+
+name, 
+
+status, 
+
+progress, 
+
+queuePosition, 
+
+ModelId 
+
+8.reTrainDataset(String modelId):if you want to retrain model without changing model id use this.It is help full when you add feedback our new images to label 
+
+Returns (EinsteinAI_Traning_Wraper) 
+
+DatasetId, 
+
+name, 
+
+status, 
+
+progress, 
+
+queuePosition, 
+
+ModelId 
+
+9.getTrainingStatus(String modelId):it accepts modelid and returns status of training Return (EinsteinAI_Traning_Wraper) 
+
+DatasetId, 
+
+name, 
+
+status, 
+
+progress, 
+
+modelId, 
+
+list of trainStats 
+
+10.getDatasetModels(String DatasetId):it returns list of models of dataset parameters 
+
+Return (List<EinsteinAI_Traning_Wraper>)  
+
+DatasetId, 
+
+name, 
+
+status, 
+
+failureMsg,(if status is failed you get this ) 
+
+ModelId 
+
+11.predictionIntent(String modelId,String text):it accepts text string  and model id of which dataset label it need to predict parameters return is list of probability and label name in ascending order 
+
+Return (List<EinsteinAI_Predict_Wraper>) 
+
+Label, 
+
+probability 
+
+12.predictionSentiment(String modelId,String text):t accepts text string  and model id of which dataset label it need to predict parameters return is list of probability and label name in ascending order 
+
+Return (List<EinsteinAI_Predict_Wraper>) 
+
+Label, 
+
+probability 
 
  
 
-Congrats we have learned and done something new now further modification of hello world is your duty and u know it right Google is your friend 
-
-You can find my smiplified wrapper in git
+Wrapper REF:https://github.com/sonicfurqan/simple-salesforce-einstein-wrapper
