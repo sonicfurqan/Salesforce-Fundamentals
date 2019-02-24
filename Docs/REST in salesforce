@@ -1,0 +1,524 @@
+REST in salesforce 
+
+Glossary 
+
+REST API: api build to work on www framework all authentication and data exchange is done using URL link 
+
+GET: request method retrieves information from the server. 
+
+POST: tells a web server accept the data enclosed in the body of the request message usually in Json format 
+
+Class to know 
+
+HTTP: this class is used to establish connection  
+
+Method  
+
+Send(<Request>):using this method request is sent to desired url 
+
+HttpRequest :this class is used to generate request that is sent using http.send(); 
+
+Methods 
+
+setEndpoint(string): used to set URL where request is to be sent 
+
+setMethod(string):it is used to set what method type request is going to be one of these-POST,GET,PUT,DELETE  
+
+setHeader((String)key,(String) value): here http header is set there can be n number of headers in request. Header info like authorization, content-type is set here 
+
+setBody((String)body):it is used to set body of request usually used with post and put method, return string is usually of json format 
+
+setBodyAsBlob(body): this is used when return request is to be sent as blob, blob body is used when encoding is involved 
+
+HttpResponse:This is used to store response that is returned after making request 
+
+Methods 
+
+getStatus(): Retrieves the status message returned for the response. 
+
+getHeaderKeys(): Retrieves an array of header keys returned in the response. 
+
+getStatusCode(): Retrieves the value of the status code returned in the response. 
+
+getBody(): Retrieves the body returned in the response. 
+
+getBodyAsBlob(): Retrieves the body returned in the response as a Blob. 
+
+Syntax 
+
+Http <httpVaribaleName> =new Http(); 
+
+HttpRequest <httpRequestvariablename>=new HttpRequest(); 
+
+HttpResponse <Variablename> =httpVaribaleName.send(<httpRequestvariablename>); 
+
+RestContext :It is used to retrieve response after sending request and getting response 
+
+ 
+
+Methods 
+
+request: Returns the RestRequest 
+
+response: Returns the RestResponse 
+
+ 
+
+RestRequest:Used to store request information returned 
+
+Method 
+
+headers: Returns the headers that are received by the request. 
+
+httpMethod: Returns one of the supported HTTP request methods. 
+
+params: Returns the parameters that are received by the request. 
+
+remoteAddress: Returns the IP address of the client making the request. 
+
+requestBody: Returns or sets the body of the request. 
+
+resourcePath: Returns the REST resource path for the request. 
+
+ 
+
+RestResponse:Used to store/send response to/from server 
+
+Method 
+
+responseBody: Returns or sets the body of the response. 
+
+headers: Returns the headers to be sent to the response. 
+
+statusCode: Returns or sets the response status code. 
+
+Syntax 
+
+//this is used to get info from request 
+
+RestRequest req = RestContext.request; 
+
+//this is used to send response  
+
+RestResponse res = RestContext.response; 
+
+//in get method it is used to get parameters that are sent by url 
+
+String parameters=req.params.get('<parametername>'); 
+
+//in post method it is used to get body that is sent 
+
+String body=req.requestBody.toString();//toString() is used to convert body to string 
+
+//used to send response back to request url 
+
+Res.responseBody=Blob.valueOf(<json String>); 
+
+CREATING REST CLASS 
+
+Tags to know 
+
+RestResource: it is written above class name. Using this indicates that class is rest class 
+
+Syntax 
+
+@RestResource (urlMapping='/<your rest api name>/*') 
+
+HttpPost:it is written above method that you want to indicate if post request is sent this method is to be executed 
+
+@HttpPost: use to indicate a method is post method NOTE: only one post method in class 
+
+Syntax 
+
+@HttpPost 
+
+Global static void <name> (){} 
+
+HttpGet:is written above method to indicate if get request is sent this method is to be executed 
+
+@HttpGet: use to indicate a method is get method NOTE: only one get method in class 
+
+Syntax 
+
+@httpGet 
+
+Global static vooid <name> (){} 
+
+Similarly @HttpPut,@HttpDelete 
+
+NOTE:  
+
+1.scope resolution form class and method should be global 
+
+1.all methods should be static 
+
+2.return type can be string or void  
+
+//Best practice use  RestContext.response.responseBody=(blob value of json string) 
+
+Syntax for Rest Class in salesforce 
+
+@RestResource (urlMapping='/<your rest api name>/*') 
+
+Global class <Classname>{ 
+
+@httpGet 
+
+Global static void <methodName>(){ 
+
+//used if url has some parameters 
+
+RestRequest req = RestContext.request; 
+
+//use to reply for request 
+
+RestResponse res = RestContext.response; 
+
+//used to get parameter if send by url 
+
+String <variable name>=req.params.get('<parametername>'); 
+
+String <variable name (json text)>='<json String>'; 
+
+//response is sent methods ends here 
+
+Res.responseBody=Blob.valueOf(<variable name (json text)>/<json text>); 
+
+} 
+
+} 
+
+@httpPost 
+
+Global static void  <methodName>(){ 
+
+//useed to get body of post method 
+
+RestRequest req = RestContext.request; 
+
+//use to reply for request 
+
+RestResponse res = RestContext.response; 
+
+//as it is blob value we use tostring to convert back to string 
+
+String <Variable name(json string is stored here)>=req.requestBody.toString(); 
+
+String <variable name (json text)>='<json String>'; 
+
+//response is sent methods ends here 
+
+Res.responseBody=Blob.valueOf(<variable name (json text)>/<json text>); 
+
+} 
+
+Simple Example 
+
+@RestResource (urlMapping='/myRest/*')  
+
+Global class mRest{  
+
+@httpGet  
+
+Global static void doGet(){  
+
+//used if url has some parameters  
+
+RestRequest req = RestContext.request;  
+
+//use to reply for request  
+
+RestResponse res = RestContext.response;  
+
+//used to get parameter if send by url  
+
+String mId=req.params.get('id');  
+
+String jsonText='{"name":"'+mid+'"}';  
+
+//response is sent methods ends here  
+
+Res.responseBody=Blob.valueOf(jsonText);  
+
+}  
+
+  
+
+@httpPost  
+
+Global static void  mpost(){  
+
+//useed to get body of post method  
+
+RestRequest req = RestContext.request;  
+
+//use to reply for request  
+
+RestResponse res = RestContext.response;  
+
+//as it is blob value we use tostring to convert back to string  
+
+String body=req.requestBody.toString();  
+
+//this is basic way of getting data from json file   
+
+Map<String,object> temp=(Map<String,object>)Json.deserializeUntyped(body);  
+
+String id=(String)temp.get('name');  
+
+String jsonText='{"name":"'+id+'"}';  
+
+//response is sent methods ends here  
+
+Res.responseBody=Blob.valueOf(jsonText);  
+
+}  
+
+} 
+
+Testing Rest Class in WorkBench(Easy) 
+
+open https://workbench.developerforce.com 
+
+login with your salesforce credentials 
+
+Select REST Explorer in jump to 
+
+type url /services/apexrest/ 
+
+suffix your rest class urlmaping name to url 
+
+Example:/services/apexrest/myRest 
+
+select get for Executing get method 
+
+If parameters is to be passed then further suffix ? To url 
+
+Example:/services/apexrest/myRest? 
+
+Now add parameter as name value pair you can add n number of parameters 
+
+Example:/services/apexrest/myRest?id=1&name=furqan&company=popcorn 
+
+select post method to execute post method add body by entering json string in body section 
+
+Example:{"name":"furqan"} 
+
+        9.    if successful you will get response in json from class 
+
+Testing Rest Class in postman(modrate) 
+
+First you need to get authorization token from salesforce for your account to access rest class 
+
+ (we will call it as rest api from now) 
+
+of your org(account) for doing that you need to create connected app in your org first Creating connected app 
+
+Prerequisite 
+
+Create one vf page it can be blank if I care 
+
+Create one rest api class that return something in post or get method  
+
+Setup>apps>create connected app>new> 
+
+Enter following 
+
+Connected App Name 
+
+ 
+
+API Name 
+
+ 
+
+Contact Email 
+
+ 
+
+Enable  
+
+Enable OAuth Settings 
+ 
+ 
+
+  Enter callback url: url of your vf page 
+
+In select oAuth scope add full access  
+
+Click save  
+
+Things needed 
+
+Consumer Key: copy this 
+
+Consumer Secret:copy this 
+
+Callback URL:copy this 
+
+Email id:your email id 
+
+Password:your password 
+
+Security token:goto your profile>reset security toke>goto your email address>in mail form salesforce you have security token copy that 
+
+Token url: https://na50.salesforce.com/services/oauth2/token 
+
+Formatting a url to get access token 
+
+https://na50.salesforce.com/services/oauth2/token? 
+grant_type=password& 
+client_id=<Consumer Key>& 
+client_secret=<Consumer Secret>& 
+username=your Email id& 
+password=yourpasswordSecurity token 
+
+         
+Enter this link in postman url  and select post method and send if everythig goes right you will get response from server as a json string in json string copy content of 
+
+Instance_url: copy this 
+
+Access_token: access this 
+
+open new tab 
+
+Formatting a url to get access rest api 
+
+Instanceurl+/services/apexrest/<Your rest api name> 
+
+In header 
+
+Key is Authorization 
+
+Value is Bearer +access_toke 
+
+For get method  
+
+If everything goes right and you will get response from api  
+
+for post method 
+
+Write your json body in body part 
+
+If everything goes right and you will get response from api . 
+
+Testing Rest Class in apex(hard) 
+
+We will do this by checking debug logs and and using methods 
+
+create a normal class 
+
+Public class Resttest{} 
+
+create 2 methods (my preference you can do whatever you want further my method is static ) 
+
+One for getting access token and for get method 
+
+Public static void getAccessToken(){} 
+
+public static void accessGetMethod(String url,String accesstoken){} 
+
+here is getAccessToken() body 
+
+String url=(url produced in "Formatting a url to get access token" step) 
+
+  Http http=new Http(); 
+//creating a request 
+
+                                HttpRequest request=new HttpRequest(); 
+
+//seting method type of request 
+  request.setMethod('POST'); 
+
+//seting url  
+  request.setEndpoint(url); 
+
+//getting response from server 
+  HttpResponse response=http.send(request); 
+
+//basic method to deseralize json string 
+
+Map<String,object> data=(Map<String,object>) Json.deserializeUntyped(response.getBody()); 
+
+//geting parameters from json string 
+String   endpoint=(String) data.get('instance_url'); 
+String   token=(String) data.get('access_token');     
+
+here is body for accessGetMethod() method 
+
+ Http http=new Http(); 
+       HttpRequest request=new HttpRequest(); 
+
+  request.setEndpoint(url+'/services/apexrest/mBotRest?name=furqan'); 
+
+ request.setHeader('Authorization','Bearer '+accesstoken); 
+
+request.setMethod('GET'); 
+
+HttpResponse response=http.send(request); 
+       //basic method to deseralize json string 
+
+         System.debug(response.getBody()); 
+
+Full Class 
+
+Public class Resttest{ 
+
+Public static void getAccessToken(){ 
+
+String url='https://na50.salesforce.com/services/oauth2/token? 
+grant_type=password& 
+client_id=<Consumer Key>& 
+client_secret=<Consumer Secret>& 
+username=your Email id& 
+password=yourpasswordSecurity token'; 
+
+ 
+
+  Http http=new Http(); 
+//creating a request 
+
+  HttpRequest request=new HttpRequest(); 
+
+//seting method type of request 
+  request.setMethod('POST'); 
+
+//seting url  
+  request.setEndpoint(url); 
+
+//getting response from server 
+  HttpResponse response=http.send(request); 
+
+//basic method to deseralize json string 
+
+Map<String,object> data=(Map<String,object>) Json.deserializeUntyped(response.getBody()); 
+
+//geting parameters from json string 
+String   endpoint=(String) data.get('instance_url'); 
+String   token=(String) data.get('access_token');   
+
+AccessGetMethod(endpoint,token); 
+
+} 
+
+Public static void accessGetMethod(String url,String accesstoken){ 
+
+Http http=new Http(); 
+       HttpRequest request=new HttpRequest(); 
+
+  request.setEndpoint(url+'/services/apexrest/mBotRest?name=furqan'); 
+
+ request.setHeader('Authorization','Bearer '+accesstoken); 
+
+request.setMethod('GET'); 
+
+HttpResponse response=http.send(request); 
+       //basic method to deseralize json string 
+
+         System.debug(response.getBody()); 
+
+ 
+
+} 
+
+} 

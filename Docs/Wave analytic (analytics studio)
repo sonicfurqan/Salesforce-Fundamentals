@@ -1,0 +1,369 @@
+Wave analytic (analytics studio) 
+
+Widgets and their parameters and uses 
+
+Note:widgets associated with step uses output result of the step. Step is user defined saql query(lens)  
+
+1)chart: used to display charts  
+
+Parameters that are useful not the basic ones some hidden things 
+
+A) icons 
+
+JSON 
+
+"icons": { 
+
+                                "useIcons": false, 
+
+                                "iconProps": { 
+
+                                    "column": "", 
+
+                                    "fit": "cover", 
+
+                                    "type": "round" 
+
+                                } 
+
+To use icons this parameters are used currently bar, column and polar gauge chart uses this 
+
+Use Icons is set to true  
+
+Column: is used to specify column name generated in step that has url data in it  
+
+B) bins 
+
+JSON 
+
+   "bins": { 
+
+                        "breakpoints": { 
+
+                            "low": 0, 
+
+                            "high": 100 
+
+                        }, 
+
+                        "bands": { 
+
+                            "low": { 
+
+                                "label": "", 
+
+                                "color": "#B22222" 
+
+                            }, 
+
+                            "medium": { 
+
+                                "label": "", 
+
+                                "color": "#ffa500" 
+
+                            }, 
+
+                            "high": { 
+
+                                "label": "", 
+
+                                "color": "#008000" 
+
+                            } 
+
+                        } 
+
+                    } 
+
+Bins are used to specify highest and lowest for the chart value and color that chart should be for the rang in between 
+
+Breakpoints is to define highest and lowest value 
+
+Bands is to define label and color of the column that lies in that respective value 
+
+C)reference line 
+
+json 
+
+"referenceLines": [ 
+
+                            { 
+
+                                "value": 5000, 
+
+                                "label": "hI", 
+
+                                "color": "#335779" 
+
+                            } 
+
+                        ] 
+
+ReferenceLines is used to spesify the refrence line  
+
+Value is used to define the value where line should be 
+
+Label is for text 
+
+And color is for what color it should be 
+
+D)Trilles 
+
+JSON 
+
+"trellis": { 
+
+                            "enable": false, 
+
+                            "showGridLines": true, 
+
+                            "flipLabels": false, 
+
+                            "type": "x", 
+
+                            "chartsPerLine": 4, 
+
+                            "size": [ 
+
+                                100, 
+
+                                100 
+
+                            ] 
+
+                        } 
+
+Trills are used to define behavior of chart can be represented in vertical, horizontal, matrix format that all are defined here 
+
+2)Table: is used to display table simple as that  
+
+3)GlobalFilter: it is used to assign global filter to whole dashboard You can have number of filter fields here  
+
+4)Container: it is used to contain other widgets 
+
+5)Date: it uses to filter based on date you provide datefield as input here 
+
+6)link: it is used to provide a href button functionality to dashboard. On button click you can jump to url or dashboard or lens or tab in same dashboard 
+
+7)image: this widget is used to display image that is saved in wave studio only 
+
+8)list: it is used to filter the dataset. It uses any dimension field as input and lists them on click it filter  
+
+9)Range: it is used to filter dataset based on measures it takes measures filed as input. You select a specific number or provide a range for filtering 
+
+10)Text: this is used to display a text on dashboard 
+
+11)Toggle: it is used to filter dataset input is any filed and it displays tab of all the data that is present in it on click of tab if filters the dataset 
+
+12)static step: it is defined in name value format. Here name is what you want to be displayed and value is what the column field name is in header according to which you want filter or group 
+
+ 
+
+SAQL: 
+
+1)load dataset 
+
+Syntax: q = load "<datast name>"; 
+
+This line is must and should be first 
+
+You can have 2 dataset to be loaded or more 
+
+2)filter dataset 
+
+Syntax: 
+
+q = filter q by '<fieldname>' == "<value>"; 
+
+q = filter q by '<fieldname>' in ["<value>", "<value>"]; 
+
+This comes after load dataset line 
+
+3)group dataset 
+
+Syntax: 
+
+q = group q by '<fieldname>'; 
+
+q = group q by ('<fieldname>',<fieldname>'); 
+
+This is used to group dataset this comes after filter 
+
+4)generating chart 
+
+Syntax 
+
+q = foreach q generate '<fieldname that is in group by line> as 'desired name' , ….; 
+
+q = foreach q generate '<fieldname> as 'desired name', …. ;//this when no group by line defined 
+
+For each comes ager group by 
+
+5)order 
+
+Syntax 
+
+q = order q by '<value that is entered as desired name in foreach line>' asc/desc; 
+
+q = order q by ('<value that is entered as desired name in foreach line>' asc/desc,'<value that is entered as desired name in foreach line>' asc/desc); 
+
+Order comes after foreach 
+
+6)Lmit 
+
+Syntax 
+
+q = limit q <value>; 
+
+To limit output of query 
+
+ 
+
+Some use full scenarios: 
+
+1)order based on some field but don’t want to display it 
+
+q = load "<datasetName>"; 
+
+q = group q by ('<field1>','<field2>', '<field3>'); 
+
+q = foreach q generate '<field1>' as '<name1>','<field2>' as '<name2>', '<field3>' as '<name3>'; 
+
+q = order q by 'name1' desc; 
+
+s = foreach q generate '<name2>' as '<anothername1>','<name2>' as '<anothername2>'; 
+
+2)when you want to display field name that is not in group by 
+
+q = load "<dataset>"; 
+
+q = group q by ('<field1>','<field2>'); 
+
+q = foreach q generate first('<field3>') as '<name3>','<field1>' as '<name1>', '<field2>' as '<name2>'; 
+
+3)if else on data 
+
+q = load "<dataset>"; 
+
+q = group q by ('<field1>','<field2>'); 
+
+q = foreach q generate first('<field3>') as '<name3>', 
+
+(case 
+
+When '<field1>' in ["val1"] then "value1" 
+
+When '<field1>' in ["val2","val3"] then "value2" 
+
+When '<field1>' in ["val4"] then "value3" 
+
+Else "value4" 
+
+end) 
+
+ as '<name1>', '<field2>' as '<name2>'; 
+
+4)compare field values on 2 dataset and get result only if  same data is present in both the fields  
+
+q = load "<dataset1>"; 
+
+q_1=load "<dataset2>"; 
+
+q= cogroup q by '<field of dataset1>',q_1 by '<field of dataset2>'; 
+
+q = foreach q generate q_1.'<field1>' as '<name1>', 
+
+q.'field1' as '<name1>'; 
+
+ 
+
+binding in dashboards scenario 
+
+1)json syntax for static step order 
+
+Here value and order are key names that are present in static step of json  
+
+{{row(<stepName>.selection, [], [\"value\", \"direction\"]).asOrder()}}  
+
+Example 
+
+Static step json 
+
+"values": [ 
+
+                    { 
+
+                        "display": "Name", 
+
+                        "value": "Name", 
+
+                        "direction": "asc" 
+
+                    }, 
+
+                    { 
+
+                        "display": "Id", 
+
+                        "value": "Id", 
+
+                        "direction": "asc" 
+
+                    } 
+
+q = order q by  {{row(Step_1.selection, [], [\"value\", \"direction\"]).asOrder()}}; 
+
+This will result as 
+
+q= order q by 'Name' asc 
+
+2)json syntax for static step filter 
+
+q = filter q by {{column(Step_1.selection, [\"value\"]).asEquality("<field name>")}}; 
+
+This will result as 
+
+q =  filter q by <field Name> in [''Name","id']; 
+
+q = filter q by {{column(Step_1.selection, 1,"value").asEquality("<field name>")}}; 
+
+This will result as 
+
+q =  filter q by <field Name> == ''Name"; 
+
+3)add a string to text widget/anywhere string can be added manually  
+
+Syntax 
+
+{{cell(<stepname>.result, <index from which row data is to be fetched>, "<column name that is in step>").asString()}} 
+
+Examle 
+
+Let the step be and named step_2 
+
+q = load "account"; 
+
+q = foreach q generate 'Name' as 'Name'; 
+
+q = limit q 2; 
+
+{{cell(step_2.result, 0, "name").asString()}} 
+
+This results in 
+
+First name that is in row under name column 
+
+ 
+
+Note json syntax's are written in value part inside double quotes("") and use escape characters 
+
+ 
+
+ 
+
+ 
+
+  
+
+ 

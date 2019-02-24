@@ -1,0 +1,401 @@
+Wave Analytics 
+
+Note: check these profiles Analytics Cloud Integration User and Analytics Cloud Security User has access to fields and objects that you need  
+
+Glossary: 
+
+Dataset: table containing records on which you operate  
+
+Data Manager: Tool to organize, transmute, format 
+
+Dataflow: chart where your data is represented. And where you can operate on dataset 
+
+Recipes: This is where you add filter or bucket field to your dataset 
+
+ 
+
+Dataflow: 
+
+Function: 
+
+1)Dataset Builder: using this you can create dataset from salesforce objects 
+
+2)SfdcDigest: this function lets you import salesforce object data 
+
+Example: 
+
+Parameters: 
+
+Name: unique name 
+
+Source Object: select from available objects that you want 
+
+Filter Conditions: any filtering that you want to add to your dataset 
+
+JSON 
+
+{ 
+
+"sfdcDigest_Account": {  
+
+"action": "sfdcDigest",  
+
+"parameters": {  
+
+"fields": [  
+
+{ "name": "Name" },  
+
+{ "name": "Id" }  
+
+],  
+
+"object": "Account" }  
+
+} 
+
+} 
+
+Action is your function name 
+
+Fields contains array of field names that are to be imported 
+
+Object is your object name 
+
+ 
+
+3)Digest: this is used to get data from external connection 
+
+4)Edgemart: this is used to import existing dataset in wave to current dataflow 
+
+Example 
+
+Parameters 
+
+Name: your unique name 
+
+Alias: select from available datasets name 
+
+JSON 
+
+{ 
+
+"csv_topCountries": { 
+
+ "action": "edgemart",  
+
+"parameters": {  
+
+"alias": "TopCountries" }  
+
+} 
+
+} 
+
+csv_topCountries is your unique name 
+
+Action is function name 
+
+Alias is your dataset name 
+
+ 
+
+5)Append: this is used to combine 2 or more data sources  
+
+Augment: augment is used to combine 2 data sources based on relationship (example account and its contacts based on ids) 
+
+Augment 
+
+Example 
+
+Parameter 
+
+Name: your unique name 
+
+Left Source: your source data source node 
+
+Left Key: select key using which you want your relation ship 
+
+Relationship: it is of format "sourcefield.childfield" 
+
+Right Source: your child object name 
+
+Right Key: to which filed you want key to match 
+
+Right Fields: fields that you want to include from child data 
+
+Operation:valid oprations are 
+
+Look Up Single Value:map to only one key 
+
+Look Up Multiple Values:map to multiple keys if present 
+
+JSON 
+
+{ 
+
+"augment_Contact": { 
+
+ "action": "augment",  
+
+"parameters": {  
+
+"right_key": [ "Id" ],  
+
+"left": "Contact",  
+
+"left_key": [ "AccountId" ],  
+
+"right_select": [ "Name" ],  
+
+"right": "sfdcDigest_Account",  
+
+"relationship": "AccountId"  
+
+}  
+
+} 
+
+augment_Contact is your uniqe name 
+
+Action is your function name 
+
+left_key contains filed name using which it has to match 
+
+Left is your source object 
+
+Right is your child object 
+
+right_key contains filed name to which it has to match 
+
+Relationship is relationship between source and child 
+
+6)Compute Expression: this is used to perform computation on dataset and add a new field to dataset. It can compute data, number and text as resulting field (example add 2 measures and give result in new field, or concatenate 2 strings and result it in new fields) 
+
+Example 
+
+Parameters 
+
+Name: your unique name 
+
+Source: select form list of nodes 
+
+Merge with Source: enable it to have all the fields is resulting output 
+
+In Add Field: 
+
+Note: in saql expression field names are not be enclosed in ' ' quotes ok :) 
+
+For Text 
+
+Name: filed name 
+
+Label: field Label 
+
+Type: text 
+
+SAQL Expression: your saql expression to compute 
+
+Default Value: default value 
+
+For Numeric 
+
+Name: filed name 
+
+Label: field Label 
+
+Type: Numeric 
+
+SAQL Expression: your saql expression to compute  
+
+Precision: decimal precision 
+
+Scale:The number of digits to the right of the decimal point 
+
+Default Value:default value 
+
+For Date 
+
+Name:filed name 
+
+Label:field Label 
+
+Type:Date 
+
+SAQL Expression: your saql expression to compute  
+
+Date Format:formate "yyyy-MM-dd"   "dd/MM/yyyy" 
+
+Default Value:default value 
+
+JSON 
+
+{ 
+
+"csv_devmeshGroup_Compute": { 
+
+"action": "computeExpression",  
+
+"parameters": { 
+
+"source": "csv_devmeshGroup",  
+
+"mergeWithSource": true,  
+
+"computedFields": [ {  
+
+"defaultValue": "WORLDWIDE",  
+
+"name": "GeoLocation",  
+
+"saqlExpression": "(case when geography_name in ["APJ"] then geography_name 
+
+when geography_name in ["EMEA"] then geography_name 
+
+when geography_name in ["PRC"] then geography_name 
+
+when geography_name in ["ASMO-LAR"] then "LAR" 
+
+when geography_name in ["ASMO-NA"] then "ASMO" 
+
+else geography_name 
+
+end)", 
+
+"label": "GeoLocation", 
+
+"type": "Text"  
+
+} ] } }} 
+
+csv_devmeshGroup_Compute is your unique name 
+
+Action is you’re function name 
+
+Source is your source node on which you are operating 
+
+MergeWithSource if true output contains all fields if false only computed field are in output 
+
+ComputedFields:it is array hence you can add any number of fields 
+
+DefaultValue:if saql fails this is what resulting value will be in field 
+
+Name:name of resulting field 
+
+Label:label of resulting field 
+
+Type:text/numeric/date 
+
+SaqlExpression: this your expression 
+
+7)Dim2mea:it is used to convert numbers to string format  
+
+8)Filter: it is used to filter data source to some criteria  
+
+9)Slice: it is used to drop column that may not be needed in final dataset 
+
+10)Update: it is used to update a field value based on field value of another data source 
+
+11)SfdcRegister : this is used to make a final data source available in wave studio as dataset 
+
+Example 
+
+Parameter 
+
+Name: your unique name 
+
+Source Node: select from available data source 
+
+Alias: name that will appear in wave analytics 
+
+Name: name that will appear in wave analytics 
+
+Sharing Source: it is field level security that you can apply  
+
+By using this and only this you will get your data in wave studio 
+
+ 
+
+Uploading csv files to create dataset 
+
+Metadata:json formate 
+
+{"fileFormat":{ 
+
+"charsetName":"UTF-8", 
+
+"fieldsDelimitedBy":",", 
+
+"fieldsEnclosedBy":"\"", 
+
+"linesTerminatedBy":"\n" 
+
+}, 
+
+"objects":[{ 
+
+"connector":"CSV", 
+
+"fullyQualifiedName":"TopCountries_csv", 
+
+"label":"TopCountries.csv", 
+
+"name":"TopCountries_csv", 
+
+"fields":[ 
+
+{"fullyQualifiedName":"Name","name":"Name","type":"Text","label":"Name"},{"fullyQualifiedName":"Year","name":"Year","type":"Numeric","label":"Users","precision":18,"defaultValue":"0","scale":0,"format":"0"}, 
+
+{            "description": "",            "fullyQualifiedName": "CloseDate",              "label": "Close Date",            "name": "CloseDate",            "isSystemField": false,            "isUniqueId": false,            "type": "Date",            "format": "MM/dd/yyyy",            "fiscalMonthOffset": 0        } 
+
+,]}]} 
+
+ 
+
+"fileFormat":{"charsetName":"UTF-8","fieldsDelimitedBy":",","fieldsEnclosedBy":"\"","linesTerminatedBy":"\n"} these lines define formate of file 
+
+"connector":"CSV","fullyQualifiedName":"TopCountries_csv","label":"TopCountries.csv","name":"TopCountries_csv", these lines define name of dataset 
+
+Note:label is name of file that is uploaded 
+
+Fields can be one of 3 types 
+
+Text/number/date 
+
+Formate for text 
+
+{"fullyQualifiedName":"Name","name":"Name","type":"Text","label":"Name"}, 
+
+Formate for number 
+
+{"fullyQualifiedName":"Year","name":"Year","type":"Numeric","label":"Users","precision":18,"defaultValue":"0","scale":0,"format":"0"} 
+
+Formate for date 
+
+{            "description": "",            "fullyQualifiedName": "CloseDate",              "label": "Close Date",            "name": "CloseDate","isSystemField": false,            "isUniqueId": false,            "type": "Date",            "format": "MM/dd/yyyy",            "fiscalMonthOffset": 0        } 
+
+ 
+
+Recipe 
+
+Recipe are made on available datasets in wave operations that can be done are 
+
+Hide Column: this of Boolean type using this you can eliminate particular column from your final dataset  
+
+Trim: creates new column that has with spaces removed from string 
+
+Substring: you specify starting position and string length a new column is created contains that substrings 
+
+Split: you specify delimiter then string is split accordingly and new columns are created containing each string 
+
+Uppercase: creates a new column that contains uppercase strings 
+
+Lowercase: creates a new column that contains lowercase strings 
+
+Dim2Mea: creates a new column that has string converted to numbers(off course string needs to have integer value in it) 
+
+Replace: you specify find value and replace value it creates a new column that has value replaced 
+
+Filter: you specify filter condition then whole dataset is filtered by that condition 
+
+Bucket: same as replace but you can replace multiple values at a time or compute a expression and then replace it with value based on result 

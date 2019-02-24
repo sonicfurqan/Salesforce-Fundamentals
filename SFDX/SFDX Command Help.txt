@@ -7,7 +7,7 @@
 	 b.sfdx force:auth:web:login --setalias litningpoc --instanceurl https://test.salesforce.com --setdefaultusername
 3.Get Data From non scartch orgs
 (multi)  a.sfdx force:source:retrieve -m <desire meatadata comma seprated> [(Optional or else default org data is fetched) -u <username>]
-(multi)	 b.sfdx force:source:retrieve -m ApexClass
+(multi)	 b.sfdx force:source:retrieve -m ApexClass,AuraDefinitionBundle,LightningComponentBundle
 (single) c.sfdx force:source:retrieve -m <desire meatadata>:<filename>
 (single) d.sfdx force:source:retrieve -m ApexClass:My_Utils
 
@@ -20,6 +20,8 @@
 
 
 
+sfdx force:source:deploy -m ApexClass:ViewComponents
+
 
 
 
@@ -29,6 +31,7 @@
 [3]REF Command List :https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference_force_source.htm?search_text=pull
 [3]REF Meatada type name:https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_types_list.htm
 [4]REF Command List :https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference_force_source.htm?search_text=force:source:deploy
+REF:https://gist.github.com/toadgeek/cdfbef4a96531f30b1ee9d10a5791755
 
 
 

@@ -1,0 +1,445 @@
+Node.js on Heroku  
+
+Prerequisite for ubuntu systems (for windows google search)  
+
+Install node.js in system  
+1.sudo apt-get install nodejs  
+2.sudo apt-get install npm  
+3.sudo ln -s /usr/bin/nodejs /usr/bin/node //creating sym link  
+
+Install required packages   
+
+Npm install  
+
+Npm install express  
+
+Npm install require  
+
+Npm install body-parser  
+
+mpm install --save --save-exact cool-ascii-faces  
+
+  
+
+Install heroku cli  
+1.sudo add-apt-repository "deb https://cli-assets.heroku.com/branches/stable/apt./"  
+2.curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add -  
+3.sudo apt-get update  
+4.sudo apt-get install heroku  
+
+ 
+
+Install git  
+1.sudo apt-get update  
+2.sudo apt-get upgrade  
+3.sudo apt-get install git  
+
+ 
+
+Install ngrok(For debuging localy) 
+1.downlod file from https://ngrok.com/download for linux 
+
+ Node.js 
+
+Library: system 
+
+these are system functions that we use 
+
+Method: 
+
+Init:this is used to create package structure of our js  file in folder 
+Example 
+$ npm init –yes 
+this will create package.json file that contains structure of js 
+Command in root directory to execute  
+$npm init 
+this is step by step proceger for creating package.json it will ask all parmeters 
+
+Express.static: To include static files such as images, CSS files, and JavaScript files, in our project we use express.static function in Express 
+
+ 
+
+ 
+
+Library: Express  
+
+Express is used when you want to receive a request from external source by url either in get, post, delete, put method   
+
+Variables Required  
+
+Var express = require('express');  
+/*require('express') import express library in our project and assign to variable named express*/  
+
+var app = express ();  
+/*all express library methods cannot be used directly hence it needs to be asigend to one variable that will act as class for express library*/  
+
+var port = process.env.port || 3000;  
+/*process.env.port || portnumber(3000) defines that all request coming on port 3000 are listend by our express app */  
+
+Parameters to understand  
+
+ Path:This is used to define when a method is to be executed based on url path  
+consider this as a parameter used for function overloading I.e  
+example: /*these are ending of url request */  
+
+ ( '/' ) all request with no parameters in url are routed to this method  
+
+('/admin')all requests that have admin at end are routed to this method  
+
+('/user')all requests that have user at end are routed to this method  
+
+('/login/admin') all requests that have /login/admin at end are routed   
+               to  this method  
+ 
+ 
+ 
+         
+
+ middleware: this are the function that can access request, and response of post, get, put, delete methods. They are executed in sequence as written. And return back execution to main method. middleware are callback methods by default, Check included class you will get clear picture 
+Example/*on get method*/ 
+
+App.get('/',one) 
+here app.get calls method one as soon as it gets request 
+
+App.get('/',one,two) 
+here app.get calls method one as soon as it gets executed once one finishes its execution it calls two NOTE:you have to add a command next(); to call next method 
+
+App.get('/',function(req,res,next){ next();}) 
+here app.get executes its inline function first than call next method a 
+ 
+
+Methods//NOTE:app is variable to which we have assigned express library   
+
+App.listen():  
+when request comes this method gets executed first here it register what method type it is and send that request transfer it respectively  
+Syntax:  
+app.listen(port,function(){});  
+/*function is optional if you want to execute something as soon as you receive request then without using request variables then you can use function  
+NOTE:it is not necessery it should be inline function it can call external function */  
+
+App.get(): 
+after getting request of get type method body of this function is executed 
+Syntax: 
+app.get(path,function(request,response,next){}) 
+Example 
+
+App.get('/',function(request,response){ 
+body=JSON.stringify(res.body) 
+response.body('{}') 
+}) 
+here after getting get request inline method is executed and empty response is sent 
+
+App.get('/',function(request,response,next){ 
+next(); 
+}) 
+app.use(mMethod); 
+var mMethod=function(resquest,response){} 
+here after getting request inline function is executed on coming to next () command mMethod function is executed after finishing its execution control is returned back to main inline function you can have a sequence of calls after last method execution control is returned to inline function. This type is called middleware functions  
+NOTE: all middleware share same request and response  
+
+Same thing for post and another methods you send back response to server in json string by using response.send(<Json string>); method 
+ 
+
+Library: Require 
+
+This module is used to make http request to rest api's 
+
+Variables Request 
+
+Const request = require('request');  
+/*require('request') import request library in our project and assign to variable named request*/  
+
+Var options =/*this is json structure that includes request header method body url etc structure is given below */ 
+url is your end point 
+method is get post etc 
+headers are your header info like content type 
+form are your additional info like password id etc 
+body is your json string that is needed to be sent for post method 
+Structure: 
+{ 
+url:'<your end point>', 
+method:'<your method type>', 
+headers:{ 
+'<key>':'<value>'/*as many required headers */ 
+                }, 
+form:{ 
+'<key>':'<value>'/*as many required headers */ 
+           }, 
+body:'<your json string>' 
+} 
+
+Method 
+
+Request itself is method its syntax  
+request(options,function(error,response,body){ 
+               var jsonString=JSON.stringify(body); 
+                }); 
+Example 
+request('https://www.google.com',method:'GET',function(error,response,body) { 
+console.log(body); 
+}); 
+here reqest type is set to get and it is fetching data from url's get function 
+
+ 
+
+Git 
+
+Git is required to upload data to github and that data is accessed by heroku to deploy(don’t worry you code is private) 
+
+Command to know 
+
+Git init: 
+you execute this command in directory that contains files that are needed to be uploaded 
+
+Git add <file/direcotry name> 
+this is used to add single file or whole directory to git hub 
+
+Git commit –m "<any text>" 
+this is to tell system that after adding files to git you need to upload them 
+
+Git push origin master// while using heroku origin is replaced with heroku 
+this finally upload your code to git hub server 
+
+ 
+
+Creating app in heroku (node.js) 
+
+For now I don’t know what's the basic structure needed to upload app to heroku and configuring git for it I will go with their hello world app and modify as we needed (If you are ambitus google is your friend) 
+
+ 
+
+Copy hello world node.js app for heroku from git hub 
+
+$Git clone https://github.com/heroku/node-js-getting-started.git 
+after downloading you can change a name of directory to what you want 
+
+Open terminal making its root directory of node.js app 
+
+Uploading it to heroku 
+
+$heroku create <your name > 
+this will create  app in heroku  where you will uploade your files  
+after successful creation of app 
+
+$git push heroku master 
+if successful code will be uploaded to git hub and heroku will sync with it 
+
+$heroku ps:scale web=1 
+this will start your app on web.now your web site is up and running you can access it by using url given (web=1 specifies web site is running on one server it can be up to 1 for trail version which makes our website running on 5 server) 
+
+$heroku open 
+this will open your app in browser 
+
+   
+
+Now after changing you app code you uploade files to heroku by following method 
+
+$ git add <name> 
+this will add file to que 
+
+$git commit –m "<text>" 
+this will make sure that when upload cmd is executed all que files are uploaded 
+
+$git push heroku master 
+this will upload all files in que 
+
+ 
+
+Understanding Heroku node.js app structure 
+
+Index.js 
+
+This file is executed first when you server starts running 
+
+Port for heroku that is open to listing is 5000 and it should be same cannot change it 
+
+Include css,images,javascripts(if any you want ito include or else leve the folder blank but public  folder is must)  by command 
+app.use(express.static(__dirname + '/public')); 
+
+Include html pages from View folder. Views folder include all html pages hierarchy inside views folder is your wish but views folder is must by command 
+app.set('views', __dirname + '/views'); 
+
+We use ejs template to store our html files hence we need to set our view engine as ejs by code 
+app.set('view engine', 'ejs'); 
+
+No to render any page in views directory you specify its path as parameter in. render() command  
+example in get method 
+response.render('pages/index')//index is ejs file in views folder under pages subfolder 
+
+App.get is where get request response is set (this you get it correct) 
+
+Directories (From what I understand not guaranteed but it's 80%  accurate ) 
+
+public contains all style sheet(css),javascriptes(js),images    
+
+ view contains all html (in ejs formate )that are used to render page 
+
+App.json 
+
+Name: its name of your app 
+
+Description: it is description of your app 
+
+Image: any images that you use in your project its full path is specified here its array if there are multiple 
+
+Keywords: keywords using which your app can be searched its array if multiple are to be defined 
+
+Test.js 
+
+Test  script that checks whether all our project structure is correct if yes let it start on heroku server (This is what I interpreted from code to write your custom test script google is your friend)But test script is must 
+
+Package.json 
+
+Name:name of your app 
+
+Version:version given by heroku 
+
+Description:discription of your app 
+
+Engines: its array defining engines you use : 
+node and its version is mandatory as it is used 
+
+Main: your js file that is executed as soon as app is executed 
+
+Script:this is order of execution during init 
+
+Dependencies: these are all node.js or 'Engines' libraries that are included in your project: 
+ejs and express is mandatory as we use it 
+
+DevDependencies:I don’t know you can google it if not leve it as it is 
+
+Keywords:its array write what all you wrote in app.json 
+
+License: you licence type by default its MIT change it according to your requirement 
+
+Procfile 
+
+a text file in the root directory of your application, to explicitly declare what command should be executed to start your app. 
+For our package its 
+web: node index.js 
+
+Local debugging your project 
+
+Run your app with cmd  
+$node index.js 
+here index.js is first script that is needed to run after test (index.js in my name can be anything) 
+if all is correct you will see console.log () string that is written in app.listine inline function if any 
+
+Open localhost:5000 to check if all is running correct  
+
+ 
+Uploading and deploying app in heroku server ( Finally) 
+
+Create a heroku account 
+
+Open terminal and type command 
+$ heroku login 
+enter email id and password 
+
+Go to any local directory where you want your package files to reside 
+
+Type cmd 
+$ git clone https://github.com/heroku/node-js-getting-started.git 
+
+Change directory name from node-js-getting-started to any if you wish 
+navigate inside that direcotry and open terminal 
+
+Type cmd 
+$ create heroku <app name(optional )> 
+this will create a heroku app with you provided name if name is available  
+and result in 2 links one is public url which you can open second is private git url where you upload you code 
+
+Next type command  
+$ git push heroku master 
+if successful this will upload all your code to git from where heroku process and runs on its server 
+
+After changing some code in files of folder if you need to update ypur code on git this is done by following series of cmds 
+
+$ Git app <file/foldername> 
+
+$ git commit –m "<text>" 
+
+$ Git push heroku master 
+this series of command push your file to git and synch with your heroku server 
+
+Next you need to initiate run on heroku server this is done by cmd 
+$ heroku ps:scale web=1 
+here scale web=1 specifies that only one instance of your code is running on server for free limit is one on verified account is 5 what it implies is if one instance is down other takes over it and run your site without any down time 
+
+Finally open your web site and it does whatever code is written in app.get 
+by cmd 
+$ heroku open 
+
+ 
+
+Congrats we have learned and done something new now further modification of hello world is your duty and u know it wright Google is your friend 
+
+ 
+
+Zip url: 
+
+https://popcornapps-my.sharepoint.com/personal/syedfurqan_ahmed_popcornapps_com/_layouts/15/guestaccess.aspx?docid=06e47f9fba1c1417d9e9c11c470550f09&authkey=AdeAGsckHmlYLUk0rrvkJlI 
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+  
+ 
+
+ 
+ 
+
+ 
