@@ -20,7 +20,7 @@
 
 
 
-sfdx force:source:deploy -m ApexClass:ViewComponents
+
 
 
 

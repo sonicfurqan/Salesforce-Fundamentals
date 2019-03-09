@@ -1,0 +1,3 @@
+<aura:component>
+<aura:handler event="force:refreshView" action="{!c.mymethodname}" description="method is called when component recvies refreshView event" />
+</aura:component>

@@ -1,0 +1,14 @@
+<aura:component >
+
+    <aura:attribute name="headerTitle" type="Aura.Component[]">
+        <h2>
+            <b>My bold title</b>
+        </h2>
+    </aura:attribute>
+
+    <lightning:card class="slds-text-heading_small" 
+        title="{!v.headerTitle}" iconName="utility:broadcast">
+       
+    </lightning:card>
+
+</aura:component>
