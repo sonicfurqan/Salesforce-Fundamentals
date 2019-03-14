@@ -18,8 +18,6 @@
 (Single) d.sfdx force:source:deploy -m ApexClass:My_Utils
 
 
-
-
 Pulling LWC components 
 Currently there is bug that gives error on retrive of ApexClass,AuraDefinitionBundle,LightningComponentBundle
 "Cannot read property 'fileName' of undefined."
