@@ -1,0 +1,22 @@
+1.Athunticate  your heroku account
+	a.heroku login
+2.Create app in heroku
+ 	a heroku create <your name >
+	b.Example:heroku create myserverforheroku
+2.1 : add new code to commit que
+	a.git add .
+2.2 : Commit your code to git
+	a.git commit -m "commit message"
+
+3.push code to heroku app
+	a.git push heroku master
+
+3.1 check code locally 
+	a.heroku local web
+	b. http://localhost:5000  to check app
+
+4.add Dynos to app
+	a.heroku ps:scale web=<number of dynos>
+	b.Example:heroku ps:scale web=1
+5.open created app
+	a.heroku open
