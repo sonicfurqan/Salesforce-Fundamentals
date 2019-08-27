@@ -18,6 +18,43 @@
 (Single) d.sfdx force:source:deploy -m ApexClass:My_Utils
 
 
+5.set default devhub org
+sfdx force:config:set defaultdevhubusername=admin@dev.com
+
+6.List All connected org list
+sfdx force:org:list
+
+7.delete scratch org
+sfdx force:org:delete -u admin@dev.com
+
+
+8.Create scratch org
+sfdx force:org:create -a admin -d 30 username=admin@dev.com
+	a. -a : aliase parameter
+	b. -d : days stcratch org is active max is 30
+	c. username :  emaili id with with org is created
+
+9.open org
+sfdx force:org:open -u admin@dev.com
+
+
+10.push data from local to any scratch org
+sfdx force:source:push -u admin@dev.com
+
+11.copy changes from  scratch org to loacl
+sfdx force:source:pull -u admin@dev.com
+
+12.Deploy from scratch org to dev hub org
+	12.a) convert scratch org fromate to deploy formate
+		 sfdx force:source:convert -r metadata
+	12.b)deploy after converting 
+			sfdx force:mdapi:deploy -d metadata -u syed@dev02.docusign.com
+
+13.check deployment status 
+sfdx force:mdapi:deploy:report
+
+
+
 Pulling LWC components 
 Currently there is bug that gives error on retrive of ApexClass,AuraDefinitionBundle,LightningComponentBundle
 "Cannot read property 'fileName' of undefined."

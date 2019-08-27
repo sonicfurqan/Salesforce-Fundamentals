@@ -11,4 +11,10 @@
        
     </lightning:card>
 
+    <lightning:card >
+		<aura:attribute set="title">
+	    title
+	    </aura:attribute>
+    </lightning:card>
+
 </aura:component>
