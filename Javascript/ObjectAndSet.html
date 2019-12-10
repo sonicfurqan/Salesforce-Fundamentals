@@ -1,0 +1,62 @@
+<html>
+<script type="text/javascript">
+    
+
+		function setMethods(){
+			//definig set
+			const users = new Set(["Naimat", "Ismat", "Azad"]);
+			//adding to set
+			users.add('Admin');
+			//check if element is present in set
+			users.has("Admin");
+			//remove element from set
+			users.delete("Admin");
+			//delete all elements in set
+			users.clear();
+			//check size of set
+			users.size;
+
+			//itrate throug iterator rather then forEach
+			let iterator = users.keys();  // same as newSet.values();
+			console.log(iterator.next().value);
+
+
+			//Removing dublicates from array 
+			const newArr = [...new Set([1,1,1,1,1,1,1,])];
+
+		}
+
+		function objectMethods(){
+			//Create pure object to hold data without any functions
+			var objectname = Object.create(null);
+
+			//converting object to array
+			let character = {
+				"first_name": "Locke",
+				"last_name": "Cole",
+				"job": "Treasure Hunter"
+			}
+			let arr = Object.entries(character);
+
+			//convert array to object
+			let scores = [
+			  ["Tim", 90],
+			  ["Joe", 88],
+			  ["Kelly", 95],
+			  ["Jesse", 77]
+			]
+			let obj = Object.fromEntries(scores);
+			
+			//geting all values of keys from object
+			let values = Object.values(scores);
+			
+			//get all keys from object
+			let keys = Object.keys(scores);
+			
+
+
+		}
+
+</script>
+
+</html>
