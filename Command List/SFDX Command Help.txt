@@ -24,6 +24,9 @@ sfdx force:config:set defaultdevhubusername=admin@dev.com
 6.List All connected org list
 sfdx force:org:list
 
+6.1.Clear expired orgs from list
+sfdx force:org:list  --clean
+
 7.delete scratch org
 sfdx force:org:delete -u admin@dev.com
 
@@ -33,6 +36,30 @@ sfdx force:org:create -a admin -d 30 username=admin@dev.com
 	a. -a : aliase parameter
 	b. -d : days stcratch org is active max is 30
 	c. username :  emaili id with with org is created
+
+8.1.Create scratch org using defnation file
+sfdx force:org:create  -f def.json -s -a <alias> -d 30 
+def.json
+`
+{
+    "orgName": "WORLD",
+    "edition": "Developer",
+    "features": [
+        "MultiCurrency",
+        "StateAndCountryPicklist"
+    ],
+    "username": "scratch20@world.com",
+    "hasSampleData": false,
+    "settings": {
+        "languageSettings": {
+            "enableTranslationWorkbench": true
+        }
+    }
+}
+`
+	a.features: Array list to add features to be enabled in org
+	b.settings: settings that need to be enabled in org
+	c.edition: which edition of org you want to create 
 
 9.open org
 sfdx force:org:open -u admin@dev.com
@@ -52,6 +79,15 @@ sfdx force:source:pull -u admin@dev.com
 
 13.check deployment status 
 sfdx force:mdapi:deploy:report
+
+14.Genrate password for scrath org
+sfdx force:user:password:generate --targetusername scratch14@world.com
+
+15.List packages installed in org
+sfdx force:package:installed:list -u <alias/username>
+
+16.Install package in scratch org
+call  sfdx force:package:install --package <pkid>
 
 
 

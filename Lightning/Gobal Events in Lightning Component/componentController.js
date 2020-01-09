@@ -6,5 +6,10 @@
     "refreshStandardComponent":function(cmp){
          $A.get('e.force:refreshView').fire();
 
+    },
+    "localizationService":function(cmp){
+
+    	let local=$A.get('$Locale');
+    	let country=local.userLocaleCountry;
     }
 })
