@@ -1,0 +1,58 @@
+A- Packaging: 
+    •	Packaging Org:  it is the org where package is developed, it could be developer org or partner developer org 
+    •	Create a namespace in the packaging org, once created it cannot be changed in that Org 
+    •	Once development is complete then create package 
+        •	Packages: 
+            o	Unlock/Un Managed Package: Does not requre Namespace, code in the package can be viewed on customer org, they cannot be upgraded 
+        o	Managed Package:  
+            	Require Namespace 
+            	Code is not visible in customer org 
+            	It supports Upgrades 
+    •	Package Versions 
+        o	Beta:  
+            	Once development is complete create beta versions to test the behavior/functionality is test orgs 
+            	Beta versions can only be installed in sandbox, scratch orgs and developer orgs and cannot be upgraded 
+            	Components added in beta versions can be removed/modified 
+        o	Managed Released: 
+            	Create this type of version when testing is done in test org is ready to test and install in Production Org 
+            	Once components are added in managed released version, many limitations apply  
+            	Many components get locked, meaning they cannot be removed or modified.
+            	These versions support push upgrades 
+
+B- Listing: 
+    •	Every partner will get access to partners.salesforce.com portal access where listing can be created to push the app to AppExchange 
+    •	Create listing the App by connecting the managed package version to it. 
+    •	Listing involves many sections to filled up 
+    •	We need to get our business Plan to be approved by Salesforce, which can be done on listing portal 
+    •	Once business Plan is approved, listing can be sent for security review 
+ 
+C-  Security Review: 
+    •	Once all sections on listing page is filled up, an app can be pushed for security review 
+    •	Security Review process involves manually/automated check for security threats which takes around 4-6 weeks of time 
+    •	Security Review folks will only check for security threats and not functionality 
+    •	Before pushing app for security Review look for security threats briefly explained below 
+        o	FLS 
+        o	CRUD CHECK 
+        o	SQL Injection 
+        o	CROSS Site script Issue 
+        o	Insecure Softwares
+        o	Assets in test methods etc 
+    •	 Get the entire app code scanned by Checkmarx scan which is available on partner portal 
+    •	Once security scan is done, app can be pushed for security Review by paying the one time security review fee 
+    •	Fill the all the details which is required to start the security review: 
+        o	Provide false- Based on checkmarx Scan, prepare false-positive document if you feel given threats are false positive 
+        o	Provide Checkmarx scan report 
+        o	Provide company Security document 
+        o	Provide test org credentials where your package is installed so that security team can review, it can be developer org 
+        o	Pay the fees and hit submit 
+    •	Once security review is done, you will either get your app approved, or will get the feedback where it has security threats, its communicated via mails 
+    •	If got the feedback work on the threats and resubmit the app 
+    •	Once your app is approved, make sure logo, text, video, everything is added on listing to reflect on AppExchange 
+    •	Until now your listing is private, now you can make the listing as public which will reflect on AppExchange 
+D- LMA: 
+    •   After the app is approved, register for License management app 
+    •	Raise a case to install LMA in PBO org 
+    •	After LMA is installed in PBO Org, any activity on appexchange can be tracked if user watches video or install your app 
+    •	Every time tracked activity is happened, it will create a lead in PBO org so that app owner can follow up 
+    •	You can track who installed your app with what version with the help of LMA 
+

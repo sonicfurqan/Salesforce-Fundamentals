@@ -1,5 +1,6 @@
 1.Athunticate  your heroku account
 	a.heroku login
+	
 2.Create app in heroku
  	a heroku create <your name >
 	b.Example:heroku create myserverforheroku

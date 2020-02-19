@@ -1,17 +1,18 @@
-1.Create a prject using force:orject
+1.Create a prject using force:object
 	 a.sfdx force:project:create --projectname <Your project name> --outputdir <Path of file to be stored in hdd>
 	 b.sfdx force:project:create --projectname SOAP --outputdir c:\Users\syedfurx\Documents\VSCODE\SOAP
 
 2.Authorize
 	 a.sfdx force:auth:web:login --setalias <anydesiredname> --instanceurl https://<test/login>.salesforce.com --setdefaultusername
 	 b.sfdx force:auth:web:login --setalias litningpoc --instanceurl https://test.salesforce.com --setdefaultusername
-3.Get Data From non scartch orgs
+
+3.Get Data From sandbox
 (multi)  a.sfdx force:source:retrieve -m <desire meatadata comma seprated> [(Optional or else default org data is fetched) -u <username>]
 (multi)	 b.sfdx force:source:retrieve -m ApexClass,AuraDefinitionBundle,LightningComponentBundle
 (single) c.sfdx force:source:retrieve -m <desire meatadata>:<filename>
 (single) d.sfdx force:source:retrieve -m ApexClass:My_Utils
 
-4.Save Data to non scratch org
+4.Save Data to sandbox
 (multi)  a.sfdx force:source:deploy -m <desire meatadata comma seprated>
 (multi)  b.sfdx force:source:deploy -m ApexClass,AuraDefinitionBundle
 (Single)  c.sfdx force:source:deploy -m <desire meatadata>:<file name>
@@ -75,7 +76,7 @@ sfdx force:source:pull -u admin@dev.com
 	12.a) convert scratch org fromate to deploy formate
 		 sfdx force:source:convert -r metadata
 	12.b)deploy after converting 
-			sfdx force:mdapi:deploy -d metadata -u syed@dev02.docusign.com
+			sfdx force:mdapi:deploy -d metadata -u syed@dev02.com
 
 13.check deployment status 
 sfdx force:mdapi:deploy:report

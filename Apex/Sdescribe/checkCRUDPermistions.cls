@@ -1,6 +1,6 @@
 public class checkCRUDPermistions {
 
-    public static boolean checkCurdPermision(String objApiName, String opration, String field) {
+    public static boolean checkCurdPermision(String obj, String opration, String field) {
         String[] types = new String[] { obj };
         Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
         for (Schema.DescribeSobjectResult res: results) {
