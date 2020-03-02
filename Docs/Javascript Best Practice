@@ -1,0 +1,14 @@
+1.Use For loop for looping as it is fastest
+2.Reduce access to properties
+    Example
+    inseted of if(i<list.length) in loop
+    Use
+    var s=list.length
+    if(i<s)
+3.If Doing Dom manuplation store dom object in variable
+    Example
+    inseted of document.querySelector("#id").innerHtml="a"
+    Use
+    var x=document.querySelector("#id")
+    x.innerHtml="a"
+4.dont declare unnessery variabels

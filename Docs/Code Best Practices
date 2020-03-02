@@ -1,0 +1,4 @@
+1.Variables Should have good name i.e name that defines what is stored in it
+2.Methods Should have Perfect name i.e it shoud do what it says
+3.Methods should not change input parameter value
+4.Method should not do 2 things in it i.e it should do only one function 
