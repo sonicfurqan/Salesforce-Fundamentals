@@ -1,4 +1,4 @@
-<aura:component >
-<aura:attribute name='attributeName' type='string' />
+<aura:component>
+    <aura:attribute name='attributeName' type='string' />
 
-</aura:component >
+</aura:component>

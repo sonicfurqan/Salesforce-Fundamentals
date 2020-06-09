@@ -6,14 +6,14 @@ import { LightningElement } from 'lwc';
 import labelName from '@salesforce/label/c.myCustomLabel';
 //@salesforce/resourceUrl is standrad uri to refre static resource
 //@salesforce/resourceUrl/staticresousceName
-import iconUR  from '@salesforce/resourceUrl/icon';
+import iconUR from '@salesforce/resourceUrl/icon';
 //@salesforce/user/Id gets current loged in user id
 import Id from '@salesforce/user/Id';
 
-export default class Importing extends LightningElement {
-    label={
+export default class static extends LightningElement {
+    label = {
         labelName
     }
-    iconURL=iconUR;
-    userId=Id;
+    iconURL = iconUR;
+    userId = Id;
 }

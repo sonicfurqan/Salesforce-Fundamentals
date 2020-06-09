@@ -1,20 +1,17 @@
 <aura:component implements="force:hasRecordId">
-	
-    <aura:attribute name="ContactRecord" type="Object" Description="After querying data is stored in this attribute"/>
-    <aura:attribute name="recordLoadError" type="String" Description="if any error occures during query mess is stored in this attribute"/>
-    
-<!--
+
+    <aura:attribute name="ContactRecord" type="Object" Description="After querying data is stored in this attribute" />
+    <aura:attribute name="recordLoadError" type="String"
+        Description="if any error occures during query mess is stored in this attribute" />
+
+    <!--
 (@param)fields=mention all the fields that you need to query, 3 level deep refrence is supported
 -->
 
 
-    <force:recordData aura:id="recordLoader"
-    recordId="{!v.recordId}"
-    fields="Id,LastName,Account.Name"
-    targetFields="{!v.ContactRecord}"
-    targetError="{!v.recordLoadError}"
-    />
-    
+    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" fields="Id,LastName,Account.Name"
+        targetFields="{!v.ContactRecord}" targetError="{!v.recordLoadError}" />
+
     {!v.ContactRecord.LastName}
     {!v.ContactRecord.Account.Name}
 </aura:component>

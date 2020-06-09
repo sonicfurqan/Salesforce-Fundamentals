@@ -1,3 +1,0 @@
-<aura:event type="COMPONENT" description="Component event bubble is captured only by parent component" >
-     <aura:attribute name="compParam" type="String"/>
-</aura:event>

@@ -1,6 +1,6 @@
 <template>
-    
-	<!--contacts loaded on init-->
+
+    <!--contacts loaded on init-->
     <template for:each={contact} for:item="SingleContactRecord">
         {SingleContactRecord.LastName}</br>
     </template>
@@ -8,8 +8,8 @@
 
 
 
-    <lightning-input value={searchKey}  label="Search Account" onchange={handleKeyChange}>
-    	
+    <lightning-input value={searchKey} label="Search Account" onchange={handleKeyChange}>
+
     </lightning-input>
 
     <template for:each={accounts} for:item="singleAccountRecord">

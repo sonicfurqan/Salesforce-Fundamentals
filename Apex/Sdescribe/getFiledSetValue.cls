@@ -20,7 +20,7 @@ public class getFiledSetValue{
         
         return wrapperList;
     }
-}
+
 
    public class FieldSetMemberWrapperClass{
         public Boolean isDBRequired                      { get; set; }
@@ -30,3 +30,4 @@ public class getFiledSetValue{
         public String fieldAPIName                       { get; set; }
         public List<Schema.PicklistEntry> pickListValues { get; set; }
     }
+}

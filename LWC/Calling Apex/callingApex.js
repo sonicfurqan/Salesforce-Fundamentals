@@ -1,8 +1,8 @@
 import { LightningElement } from 'lwc';
 
 //refrencing methods from class
-import seachAccount from '@salesforce/apex/apexClassThatIsImported.searchAccounts'
-import allContacts from '@salesforce/apex/apexClassThatIsImported.getAllContact'
+import seachAccount from '@salesforce/apex/apexClassThatIsToBeImported.searchAccounts'
+import allContacts from '@salesforce/apex/apexClassThatIsToBeImported.getAllContact'
 
 import { wire } from 'lwc';
 import { track } from 'lwc';
@@ -36,7 +36,7 @@ export default class Callapex extends LightningElement {
         }).then(result => {
             this.accounts = result;
         }).catch(error => {
-            
+
 
         });
     }

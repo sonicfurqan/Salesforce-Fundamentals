@@ -1,0 +1,8 @@
+<aura:component>
+
+    <aura:attribute name='valueHolderOne' type='String' description='' />
+    <aura:attribute name='valueHolderTwo' type='String' description='' />
+
+    <c:childComponent aura:id='findMe' />
+
+</aura:component>

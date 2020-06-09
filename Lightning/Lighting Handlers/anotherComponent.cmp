@@ -1,8 +1,0 @@
-<aura:component>
-
-<aura:attribute name='valueHolderOne' type='String' description=''/>
-<aura:attribute name='valueHolderTwo' type='String' description=''/>
-
-<c:handleCompnent aura:id='findMe'/>
-
-</aura:component>

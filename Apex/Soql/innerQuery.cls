@@ -14,7 +14,5 @@ opne workbench-> Info -> standard & custom obj (choose your object) -> Child rel
 				System.debug(c);
 			}
 		}
-
-
 	}
 }

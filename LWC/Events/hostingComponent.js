@@ -1,8 +1,8 @@
 import { LightningElement } from 'lwc';
 
 export default class Hostcomponentevent extends LightningElement {
-    
-    buttonClickHandler(event){
+
+    buttonClickHandler(event) {
         //event.preventDefault method is called at the start to stop propagation of events 
         event.preventDefault();
         //creating custom event
@@ -13,8 +13,8 @@ export default class Hostcomponentevent extends LightningElement {
             can be assigned to detail {detail :}
 
         */
-        const myCustomEvent = new CustomEvent('shownotification', { 
-                        detail :'I am here'
+        const myCustomEvent = new CustomEvent('shownotification', {
+            detail: 'I am here'
         });
         //dispatchEvent is used to fire custom event
         this.dispatchEvent(myCustomEvent);

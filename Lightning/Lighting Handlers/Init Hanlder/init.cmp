@@ -1,0 +1,6 @@
+<aura:component>
+
+    <aura:handler name='init' value='{!this}' action='{!c.onInit}'
+        description='on load of page onInit method is called' />
+
+</aura:component>

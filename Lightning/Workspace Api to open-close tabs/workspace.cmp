@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <lightning:workspaceAPI aura:id="workspace" />
+
+</aura:component>

@@ -2,30 +2,30 @@
 public class createUser{
 	@isTest
 	static void setupUser(){
-	Profile profileId = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1]; 
+                Profile profileId = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1]; 
 
-        User usr = new User(LastName = 'name', 
+                User usr = new User(LastName = 'name', 
 
-                           FirstName='completename', 
+                                FirstName='completename', 
 
-                           Alias = 'ncomp', 
+                                Alias = 'ncomp', 
 
-                           Email = 'asdf@asdf.com', 
+                                Email = 'asdf@asdf.com', 
 
-                           Username = 'asdf@asdf.com', 
+                                Username = 'asdf@asdf.com', 
 
-                           ProfileId = profileId.id, 
+                                ProfileId = profileId.id, 
 
-                           TimeZoneSidKey = 'GMT', 
+                                TimeZoneSidKey = 'GMT', 
 
-                           LanguageLocaleKey = 'en_US', 
+                                LanguageLocaleKey = 'en_US', 
 
-                           EmailEncodingKey = 'UTF-8', 
+                                EmailEncodingKey = 'UTF-8', 
 
-                           LocaleSidKey = 'en_US' 
+                                LocaleSidKey = 'en_US' 
 
-                           ); 
+                                ); 
 
-INSERT USR;
+                        INSERT USR;
 	}
 }

@@ -12,7 +12,7 @@ export default class Callapex extends LightningElement {
         //dispatchEvent is used to trigger event
         this.dispatchEvent(evt);
     }
-    
 
-   
+
+
 }

@@ -1,44 +1,42 @@
-<apex:page standardStylesheets="false" >
-    
+<apex:page standardStylesheets="false">
+
     <head>
         <style>
-            
             /* Acordeon styles */
-            
+
             .tab input {
-            
-            display:none;
-            
+
+                display: none;
+
             }
+
             .tab label {
-            position: relative;
-            display: block;
-            font-size:36px;
-            
-            
+                position: relative;
+                display: block;
+                font-size: 36px;
+
+
             }
-            
+
             .tab-content {
-            max-height: 0;
-            overflow: hidden;
-            
-            
+                max-height: 0;
+                overflow: hidden;
+
+
             }
-            
+
             /* :checked */
-            .tab input:checked ~ .tab-content {
-            max-height: 100vh;
+            .tab input:checked~.tab-content {
+                max-height: 100vh;
             }
-            
-            
-            
         </style>
     </head>
+
     <body>
-        
+
         <p><strong>Accordian</strong></p>
         <div class="tab">
-            <input id="tab-one" type="checkbox" name="tabs"/>
+            <input id="tab-one" type="checkbox" name="tabs" />
             <label for="tab-one">First Seaction</label>
             <div class="tab-content">
                 <p>
@@ -50,7 +48,7 @@
             </div>
         </div>
         <div class="tab">
-            <input id="tab-two" type="checkbox" name="tabs"/>
+            <input id="tab-two" type="checkbox" name="tabs" />
             <label for="tab-two">Section two</label>
             <div class="tab-content">
                 <p>
@@ -62,10 +60,10 @@
             </div>
         </div>
         <div class="tab">
-            <input id="tab-three" type="checkbox" name="tabs"/>
+            <input id="tab-three" type="checkbox" name="tabs" />
             <label for="tab-three">Section three</label>
             <div class="tab-content">
-                  <p>
+                <p>
                     content of third section
                 </p>
                 <p>
@@ -74,5 +72,5 @@
             </div>
         </div>
     </body>
-    
+
 </apex:page>

@@ -1,15 +1,15 @@
 ({
-    "comonentIsoftypeQuickaction" : function(cmp) {
+    "comonentIsoftypeQuickaction": function (cmp) {
         //close quick action by calling
         $A.get("e.force:closeQuickAction").fire();
     },
-    "refreshStandardComponent":function(cmp){
-         $A.get('e.force:refreshView').fire();
+    "refreshStandardComponent": function (cmp) {
+        $A.get('e.force:refreshView').fire();
 
     },
-    "localizationService":function(cmp){
+    "localizationService": function (cmp) {
 
-    	let local=$A.get('$Locale');
-    	let country=local.userLocaleCountry;
+        let local = $A.get('$Locale');
+        let country = local.userLocaleCountry;
     }
 })

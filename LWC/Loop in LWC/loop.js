@@ -1,6 +1,6 @@
 import { LightningElement } from 'lwc';
 import { track } from 'lwc';
-export default class Loopsandconditions extends LightningElement {
+export default class loop extends LightningElement {
     @track
     list = [
         {

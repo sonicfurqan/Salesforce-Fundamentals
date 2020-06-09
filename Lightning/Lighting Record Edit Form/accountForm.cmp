@@ -1,16 +1,12 @@
-<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
-    
-    <lightning:recordEditForm aura:id='accountForm'
-                              objectApiName='Account' 
-                              onload="{!c.handleLoad}"
-                              onsubmit="{!c.handleSubmit}"
-                              onsuccess="{!c.handleSuccess}" 
-                              recordId="{!v.recordId}"
-                              onerror='{!c.handleOnError}' >
-        
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+
+    <lightning:recordEditForm aura:id='accountForm' objectApiName='Account' onload="{!c.handleLoad}"
+        onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}" recordId="{!v.recordId}"
+        onerror='{!c.handleOnError}'>
+
         <lightning:inputField fieldName="Name" />
-        <lightning:inputField fieldName="Email"/>
-         <lightning:button  variant="brand" type="submit" name="Save" label="Save" />   
+        <lightning:inputField fieldName="Email" />
+        <lightning:button variant="brand" type="submit" name="Save" label="Save" />
     </lightning:recordEditForm>
 
 </aura:component>

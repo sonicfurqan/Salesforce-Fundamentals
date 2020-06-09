@@ -1,81 +1,82 @@
 <html>
 <script type="text/javascript">
-    
-    function copyToClipboard(text) { 
+
+    function copyToClipboard(text) {
 
         // create hidden text element, if it doesn't already exist 
 
-        var targetId = "_hiddenCopyText_"; 
+        var targetId = "_hiddenCopyText_";
 
-        var origSelectionStart, origSelectionEnd; 
+        var origSelectionStart, origSelectionEnd;
 
         // must use a temporary form element for the selection and copy 
 
-        target = document.getElementById(targetId); 
+        target = document.getElementById(targetId);
 
-        if (!target) { 
+        if (!target) {
 
-            var target = document.createElement("textarea"); 
+            var target = document.createElement("textarea");
 
-            target.style.position = "absolute"; 
+            target.style.position = "absolute";
 
-            target.style.left = "-9999px"; 
+            target.style.left = "-9999px";
 
-            target.style.top = "0"; 
+            target.style.top = "0";
 
-            target.id = targetId; 
+            target.id = targetId;
 
-            document.body.appendChild(target); 
+            document.body.appendChild(target);
 
-        } 
+        }
 
-        target.textContent = text; 
+        target.textContent = text;
 
-  
+
 
         // select the content 
 
-        var currentFocus = document.activeElement; 
+        var currentFocus = document.activeElement;
 
-        target.focus(); 
+        target.focus();
 
-        target.setSelectionRange(0, target.value.length); 
+        target.setSelectionRange(0, target.value.length);
 
-  
+
 
         // copy the selection 
 
-        var succeed; 
+        var succeed;
 
-        try { 
+        try {
 
-            succeed = document.execCommand("copy"); 
+            succeed = document.execCommand("copy");
 
-        } catch (e) { 
+        } catch (e) {
 
-            succeed = false; 
+            succeed = false;
 
-        } 
+        }
 
         // restore original focus 
 
-        if (currentFocus && typeof currentFocus.focus === "function") { 
+        if (currentFocus && typeof currentFocus.focus === "function") {
 
-            currentFocus.focus(); 
+            currentFocus.focus();
 
-        } 
+        }
 
-        return succeed; 
+        return succeed;
 
-    } 
-    function copy(){
-        let ele=document.getElementById('input');
-        
-        let value=copyToClipboard(ele.value);
+    }
+    function copy() {
+        let ele = document.getElementById('input');
+
+        let value = copyToClipboard(ele.value);
         console.log(value);
     }
 </script>
 
 <input type="text" name="text" id='input'>
 <button onclick="copy()">copy</button>
+
 </html>

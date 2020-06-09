@@ -1,15 +1,15 @@
 <aura:component>
 
-<aura:attribute name='valueHolderOne' type='Boolean' />
+    <aura:attribute name='valueHolderOne' type='Boolean' />
 
 
-<aura:if itTrue="{!v.valueHolderOne}">
-block visible when condition is true
-<aura:set attribute="else">
-block visible when conditon is false
+    <aura:if itTrue="{!v.valueHolderOne}">
+        block visible when condition is true
+        <aura:set attribute="else">
+            block visible when conditon is false
 
-</aura:set>
+        </aura:set>
 
-</aura:if>
+    </aura:if>
 
 </aura:component>

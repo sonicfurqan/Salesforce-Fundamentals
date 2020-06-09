@@ -5,7 +5,8 @@ public class dynamicQuery{
 		String query='SELECT id FROM Account WHERE Name=:whereValue';
 	    SObject[] objects = Database.query(<String of query>); 
 	}
-	public static void getResultsAnotherWay{
+
+	public static void getResultsAnotherWay(){
 
 		String wereValue='furqan';
 

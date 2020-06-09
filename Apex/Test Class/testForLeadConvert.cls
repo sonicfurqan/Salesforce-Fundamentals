@@ -5,23 +5,23 @@ public class testForLeadConvert{
 
 	@isTest
 	static void convertTest(){
-	Lead lead=[select id from lead limit 1];
-	Database.LeadConvert lc = new database.LeadConvert(); 
+		Lead lead=[select id from lead limit 1];
+		Database.LeadConvert lc = new database.LeadConvert(); 
  
 
-lc.setLeadId(lead.id); 
+		lc.setLeadId(lead.id); 
 
- 
-lc.setDoNotCreateOpportunity(false); 
- 
+		
+		lc.setDoNotCreateOpportunity(false); 
+		
 
-lc.setConvertedStatus('Converted'); 
+		lc.setConvertedStatus('Converted'); 
 
- 
- 
-Database.LeadConvertResult lcr = Database.convertLead(lc); 
- 
+		
+		
+		Database.LeadConvertResult lcr = Database.convertLead(lc); 
+		
 
-System.assert(lcr.isSuccess());
+		System.assert(lcr.isSuccess());
 	}
 }

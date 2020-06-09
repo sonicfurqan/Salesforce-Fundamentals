@@ -1,12 +1,12 @@
 <apex:page>
-<apex:actionfunction name='myNameFroFunction'  action='{!methodNameInApex}'/> 
+	<apex:actionfunction name='myNameFroFunction' action='{!methodNameInApex}' />
 
-<script>
+	<script>
 
-function calActionFunction(){
-	myNameFroFunction()
-}
-</script>
+		function calActionFunction() {
+			myNameFroFunction()
+		}
+	</script>
 
 
 </apex:page>

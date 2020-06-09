@@ -1,2 +1,2 @@
-<aura:component>
+<aura:component controller="apexclassname">
 </aura:component>

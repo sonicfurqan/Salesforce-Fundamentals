@@ -1,7 +1,7 @@
 import { LightningElement } from 'lwc';
 //platformShowToastEvent library
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-export default class Callapex extends LightningElement {
+export default class notification extends LightningElement {
 
     //on click of button  buttonClickHandler is called
     buttonClickHandler() {
@@ -13,7 +13,7 @@ export default class Callapex extends LightningElement {
         //dispatchEvent is used to trigger event
         this.dispatchEvent(evt);
     }
-    
 
-   
+
+
 }

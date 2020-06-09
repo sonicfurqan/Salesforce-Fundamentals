@@ -3,8 +3,8 @@ public class restCallTest{
 
 	@isTest
 	static void callRest(){
-	Test.setMock(HttpCalloutMock.class, new restMock('success','{}',200)); 
-	//your logic
+		Test.setMock(HttpCalloutMock.class, new restMock('success','{}',200)); 
+		//your logic
 	}
 	
 
