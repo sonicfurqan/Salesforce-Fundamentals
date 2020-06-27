@@ -1,7 +1,7 @@
 ({
-    "callingApex": function (cmp) {
+    "callingApex": function (component) {
 
-        let action = cmp.get("c.apexMethodName");
+        let action = component.get("c.apexMethodName");
         action.setParams({ parameter: 'hi' });
 
         action.setCallback(this, function (response) {
@@ -12,7 +12,7 @@
             }
             else if (state === "ERROR") {
                 let errors = response.getError();
-                console.log(errors[0].message);
+                console.log(errors);
             }
         });
         $A.enqueueAction(action);

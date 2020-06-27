@@ -88,8 +88,10 @@ sfdx force:user:password:generate --targetusername scratch14@world.com
 sfdx force:package:installed:list -u <alias/username>
 
 16.Install package in scratch org
-call  sfdx force:package:install --package <pkid>
+sfdx force:package:install --package <pkid>
 
+17.Logout- Remove athuntication of org 
+sfdx force:auth:logout -u <username>
 
 
 Pulling LWC components 

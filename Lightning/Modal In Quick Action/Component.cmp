@@ -1,11 +1,21 @@
 <aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader">
 
+  <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    
 
-
-    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large"
-        aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
-        <div class="slds-modal__container">
-            <header class="slds-modal__header">
+    <section>
+            <header class="modal-header  slds-modal__header">
                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
                     X
                     <span class="slds-assistive-text">Close</span>
@@ -15,11 +25,10 @@
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                 BODY
             </div>
-            <footer class="slds-modal__footer">
+            <footer class="modal-footer  slds-modal__footer">
                 <button class="slds-button slds-button_neutral">Cancel</button>
                 <button class="slds-button slds-button_brand">Save</button>
             </footer>
-        </div>
     </section>
 
 
