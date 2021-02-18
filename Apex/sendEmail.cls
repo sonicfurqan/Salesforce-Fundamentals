@@ -8,4 +8,15 @@ public class sendEmail{
         emailList.add(email);
         Messaging.SendEmailResult[] resultMail = Messaging.sendEmail(emailList);       
 	}
+	public static void sendEmailTemplateMail(String targetId,String whatId,String emailTemplateId){
+  		Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+		if(String.isNotEmpty(targetId)) message.setTargetObjectId(targetId); 
+		//Optional message.setOrgWideEmailAddressId(owdEmailId);
+		message.setSaveAsActivity(false); 
+		message.setTemplateID(emailTemplateId); 
+		if(String.isNotEmpty(whatId)) message.setWhatId(whatId);
+		message.toAddresses = new String[] { email};
+		Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage> {message};
+		Messaging.SendEmailResult[] results = Messaging.sendEmail(messages);
+	}
 }

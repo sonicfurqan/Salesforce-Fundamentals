@@ -2,3 +2,6 @@
 2.Methods Should have Perfect name i.e it shoud do what it says
 3.Methods should not change input parameter value
 4.Method should not do 2 things in it i.e it should do only one function 
+
+
+https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/expr_functions.htm

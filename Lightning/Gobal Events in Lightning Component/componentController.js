@@ -11,5 +11,12 @@
 
         let local = $A.get('$Locale');
         let country = local.userLocaleCountry;
+    },
+    "timoutUsage":function(cmp){
+            window.setTimeout(
+            $A.getCallback(function() {
+                cmp.set("v.visible", true);
+            }), 5000
+        );
     }
 })

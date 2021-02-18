@@ -11,6 +11,20 @@
     catchdatafromButton: function (cmp, event, helper) {
         let index = event.getSource().get('v.value');
         let type = event.getSource().get('v.name');
+    },
+    inputvalueSearch:function(component,event,helper){
+        event.getSource().get("v.value")
+    }
+
+    inputcheckbox:function(component,event){
+        event.getSource().get("v.checked")
+    },
+    setTimeoutFunction:function(){
+        window.setTimeout(
+            $A.getCallback(function() {
+                cmp.set("v.visible", true);
+            }), 5000
+        );
     }
 
 })

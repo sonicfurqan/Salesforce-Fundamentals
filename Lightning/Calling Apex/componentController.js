@@ -1,5 +1,5 @@
 ({
-    "callingApex": function (component) {
+    callingApex function (component) {
 
         let action = component.get("c.apexMethodName");
         action.setParams({ parameter: 'hi' });

@@ -10,5 +10,10 @@
 
 
   <lightning:button value="close" name="button" label="Cancel" title="Cancel" onclick="{! c.catchdatafromButton }" />
-
+  
+ <lightning:input onchange="{! c.inputvalueSearch }"
+                                     name="search"
+                                     label="search "
+                                     type="search"
+                                     />
 </aura:component>
