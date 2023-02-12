@@ -9,3 +9,6 @@ Folder contains comment syntax and use to code that is used during apex,aura,lwc
 
 ## Snippet
 Some code snippets added that are helpfully and most comely repeatedly used 
+
+## CLI Command
+contains readme for commands used during development
