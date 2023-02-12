@@ -1,1 +1,0 @@
-SELECT Id,Title FROM ContentVersion USING SCOPE Team

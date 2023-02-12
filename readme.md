@@ -12,3 +12,6 @@ Some code snippets added that are helpfully and most comely repeatedly used
 
 ## CLI Command
 contains readme for commands used during development
+
+# Release
+contains some important snipe's from salesfroce release
