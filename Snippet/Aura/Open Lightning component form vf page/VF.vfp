@@ -1,0 +1,15 @@
+<apex:page>
+    <apex:includeLightning />
+    <div id="displayArea"></div>
+    <script>
+        //lightning out function
+        $Lightning.use("c:containerApp", function () {
+            $Lightning.createComponent("c:myComponent", {
+                attributeName: 'furqan was here'
+            }, "displayArea",
+                function (cmp) { }
+            );
+        });
+
+    </script>
+</apex:page>

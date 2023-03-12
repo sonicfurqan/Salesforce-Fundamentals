@@ -5,13 +5,13 @@ Guid to salesforce dev syntax and some code snippets
 # Structure
 
 ## Syntax
-Folder contains comment syntax and use to code that is used during apex,aura,lwc development
+Folder contains comment syntax and helper code that is used during apex,aura,lwc development
 
 ## Snippet
-Some code snippets added that are helpfully and most comely repeatedly used 
+Some code snippets added that are helpfully and  repeatedly used 
 
 ## CLI Command
 contains readme for commands used during development
 
 # Release
-contains some important snipe's from salesfroce release
+contains some important snipe's from salesforce release

@@ -1,0 +1,6 @@
+<aura:component>
+
+<aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+<aura:handler event="aura:doneRendering" action="{!c.doneRendering}"/>
+
+</aura:component>

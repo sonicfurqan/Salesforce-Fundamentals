@@ -1,0 +1,48 @@
+<apex:page>
+    <script src="../../soap/ajax/42.0/connection.js" type="text/javascript"></script>
+    <script> sforce.connection.sessionId = '{!GETSESSIONID()}'; </script>
+    <script type="text/javascript">
+
+        function query() {
+            let result = sforce.connection.query("Select Name, Id from Account");
+            let records = result.getArray("records");
+            for (let i = 0; i < records.length; i++) {
+                let record = records[i];
+
+            }
+        }
+        function callApi() {
+
+
+            sforce.connection.remoteFunction({
+
+                url: "https://www.google.com",
+
+                requestHeaders: { "Content-Type": "application/json" },
+
+                method: "GET",
+
+                onSuccess: function (response) {
+
+                    console.log(response);
+
+                },
+
+                onFailure: function (response) {
+
+                    console.log("Failed" + response)
+
+                },
+
+                async: false
+
+            });
+
+
+
+
+
+        }
+
+    </script>
+</apex:page>

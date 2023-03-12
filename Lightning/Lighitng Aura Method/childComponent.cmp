@@ -1,7 +1,0 @@
-<aura:component>
-
-    <aura:method name="mehtodNameFromAttribute" action="{!c.methodInJSController}"
-        description='when this component is invoked from other component that component can call methodInJSController using someName attribute ' />
-
-
-</aura:component>

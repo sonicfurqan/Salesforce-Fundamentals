@@ -1,0 +1,25 @@
+<apex:page controller="apexclassname">
+    <script type="text/javascript">
+    function getRemoteAccount() {
+        var variables = 'hi'
+ 
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.className.functionName}',
+            variables, 
+            function(result, event){
+                if (event.status) {
+                    let res=result;
+                } else if (event.type === 'exception') {
+                  let error= event.message
+                } else {
+                    let responce=  event.message
+                }
+            }, 
+            {escape: true}
+        );
+    }
+    </script>
+ 
+     <button onclick="getRemoteAccount()">callApex</button>
+     
+</apex:page>

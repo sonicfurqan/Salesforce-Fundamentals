@@ -1,4 +1,0 @@
-<aura:component>
-   
-    <c:PassValue onvalueselect="{!c.onSelection}"/>
-</aura:component>

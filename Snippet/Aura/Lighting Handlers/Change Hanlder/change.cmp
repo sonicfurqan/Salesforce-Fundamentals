@@ -1,0 +1,11 @@
+<aura:component>
+
+    <aura:attribute name='changeAtribute' type='String' description='' />
+
+    <aura:handler name='change' value='{!v.changeAtribute}' action='{!c.onChangeControler}'
+        description='on change of value in attribute changeAtribute onChangeControler controller is called' />
+
+
+</aura:component>
+
+  

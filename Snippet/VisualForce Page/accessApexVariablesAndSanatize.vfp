@@ -1,0 +1,13 @@
+<apex:page>
+
+    <script>
+
+        var myString = '{!JSENCODE(myName)}';
+
+        var mybool = {!IF(myBool_data, "true", "false")};
+
+        var myUrl = '{!URLENCODE(myUrl)}';
+
+    </script>
+
+</apex:page>

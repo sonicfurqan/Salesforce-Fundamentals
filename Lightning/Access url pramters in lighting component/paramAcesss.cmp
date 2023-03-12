@@ -1,5 +1,0 @@
-<aura:component implements="lightning:isUrlAddressable"
-    description="isUrlAddressable interface by default create pagerefrence attribute">
-
-
-</aura:component>

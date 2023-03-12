@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Application Event bubble can be captured by all components in view">
+    <aura:attribute name="appParam" type="String" />
+</aura:event>

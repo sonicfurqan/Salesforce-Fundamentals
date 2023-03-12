@@ -1,7 +1,0 @@
-<aura:component>
-
-    <aura:registerEvent name="myEvent" type="c:ComponentEvent"
-        Description="event needs to be regesterd in component if it is to be fired from component" />
-
-    <lightning:button label="Invoke Component Event" title="Invoke Component Event" onclick="{! c.invokeCompEvent }" />
-</aura:component>

@@ -1,0 +1,39 @@
+<template>
+    <p>
+        @Track decorator makes a virable reactive i.e if value changes then it is reflected on ui
+        track variables are local to component cannot be refred by other components
+        @api decorator makes a virable reactive i.e if value changes then it is reflected on ui
+        track variables are public can be refred by other components
+        @api library also contains recordId and objectname if componetn is in recordpage
+    </p>
+    <lightning-card title="Track" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+
+            <p>element 1, {element1}!</p>
+            <lightning-input label="Element 1" value={element1} onchange={changeHandlerForElementOne}>
+            </lightning-input>
+            <p>element 2, {element2}!</p>
+            <lightning-input label="Element 2" value={element2} onchange={changeHandlerForElementTwo}>
+            </lightning-input>
+            <p>element 3, {element3}!</p>
+            <lightning-input label="Element 3" value={element3} onchange={changeHandlerForElementThree}>
+            </lightning-input>
+            <p>element 4, {element4}!</p>s
+            <lightning-input label="Element 4" value={element4} onchange={changeHandlerForElementFour}>
+            </lightning-input>
+            <p>element 4, {allValues}!</p>
+
+
+            <p>element 11, {element10}!</p>s
+            <lightning-input label="Element 11" name='ele10' value={element11} onchange={changeHandlerForElements}>
+            </lightning-input>
+            <p>element 11, {element11}!</p>s
+            <lightning-input label="Element 12" name='ele11' value={element12} onchange={changeHandlerForElements}>
+            </lightning-input>
+            <p>element 12, {element12}!</p>s
+            <lightning-input label="Element 13" name='ele12' value={element13} onchange={changeHandlerForElements}>
+            </lightning-input>
+
+        </div>
+    </lightning-card>
+</template>
